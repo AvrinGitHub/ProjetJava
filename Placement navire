@@ -1,1 +1,205 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package projetjava;
 
+/**
+ *
+ * @author Admin
+ */
+public class PlacementBateau {
+    
+    public static boolean estPresent(String[][] Grille, int i, int j){
+        
+        return Grille[i][j].equals("  ");
+    }
+    
+    public static void placement(String[][] Grille){
+        
+        int nbSMarin = 4;
+        int nbDestroyer = 3;
+        int nbCroiseur = 2;
+        int nbCuirasse = 1;
+        int max = 14, min = 0;
+        
+        //Placement du cuirassé
+        while(nbCuirasse!=0){
+            //Génération des coordonnées aléatoires
+            int nbAleai = (int)(Math.random()* (max - min + 1) + min );
+            int nbAleaj = (int)(Math.random()* (max - min + 1) + min );
+            int hor = 1, ver = 2;
+            int orientation = (int)(Math.random()* (ver - hor + hor) + hor);
+            
+            if(estPresent(Grille,nbAleai,nbAleaj)==true){
+                //Placement du navire à l'horizontal
+                if(orientation==1){
+                    if(nbAleaj>=7){
+                        max = 6;
+                        nbAleaj = (int)(Math.random()* (max - min + 1) + min );
+                    }
+                    if(estPresent(Grille,nbAleai,nbAleaj+1)==true){
+                        if(estPresent(Grille,nbAleai,nbAleaj+2)==true){
+                            if(estPresent(Grille,nbAleai,nbAleaj+3)==true){
+                                if(estPresent(Grille,nbAleai,nbAleaj+4)==true){
+                                    if(estPresent(Grille,nbAleai,nbAleaj+5)==true){
+                                        if(estPresent(Grille,nbAleai,nbAleaj+6)==true){
+                                            if(estPresent(Grille,nbAleai,nbAleaj+7)==true){
+                                                if(estPresent(Grille,nbAleai,nbAleaj+8)==true){
+                                                    for(int k=0;k<9;k++){
+                                                    Grille[nbAleai][nbAleaj+k]="**";                               
+                                                    }
+                                                    nbCuirasse--;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                //Placement du navire à la verticale
+                if(orientation==2){
+                    if(nbAleai>=7){
+                        max = 6;
+                        nbAleai = (int)(Math.random()* (max - min + 1) + min );
+                    }
+                    if(estPresent(Grille,nbAleai+1,nbAleaj)==true){
+                        if(estPresent(Grille,nbAleai+2,nbAleaj)==true){
+                            if(estPresent(Grille,nbAleai+3,nbAleaj)==true){
+                                if(estPresent(Grille,nbAleai+4,nbAleaj)==true){
+                                    if(estPresent(Grille,nbAleai+5,nbAleaj)==true){
+                                        if(estPresent(Grille,nbAleai+6,nbAleaj)==true){
+                                            if(estPresent(Grille,nbAleai+7,nbAleaj)==true){
+                                                if(estPresent(Grille,nbAleai+8,nbAleaj)==true){
+                                                    for(int k=0;k<9;k++){
+                                                        Grille[nbAleai+k][nbAleaj]="**";                               
+                                                    }
+                                                    nbCuirasse--;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        //On réinitialise la valeur du max
+        max = 14;
+        
+        //Placement des croiseurs
+        while(nbCroiseur!=0){
+            //Génération des coordonnées aléatoires
+            int nbAleai = (int)(Math.random()* (max - min + 1) + min );
+            int nbAleaj = (int)(Math.random()* (max - min + 1) + min );
+            int hor = 1, ver = 2;
+            int orientation = (int)(Math.random()* (ver - hor + hor) + hor);
+            
+            if(estPresent(Grille,nbAleai,nbAleaj)==true){
+                //Placement du navire à l'horizontal
+                if(orientation==1){
+                    if(nbAleaj>=11){
+                        max = 10;
+                        nbAleaj = (int)(Math.random()* (max - min + 1) + min );
+                    }
+                    if(estPresent(Grille,nbAleai,nbAleaj+1)==true){
+                        if(estPresent(Grille,nbAleai,nbAleaj+2)==true){
+                            if(estPresent(Grille,nbAleai,nbAleaj+3)==true){
+                                if(estPresent(Grille,nbAleai,nbAleaj+4)==true){
+                                    for(int k=0;k<5;k++){
+                                        Grille[nbAleai][nbAleaj+k]="oo";                               
+                                    }
+                                    nbCroiseur--;
+                                }
+                            }
+                        }
+                    }
+                }
+                //Placement du navire à la verticale
+                if(orientation==2){
+                    if(nbAleai>=11){
+                        max = 10;
+                        nbAleai = (int)(Math.random()* (max - min + 1) + min );
+                    }
+                    if(estPresent(Grille,nbAleai+1,nbAleaj)==true){
+                        if(estPresent(Grille,nbAleai+2,nbAleaj)==true){
+                            if(estPresent(Grille,nbAleai+3,nbAleaj)==true){
+                                if(estPresent(Grille,nbAleai+4,nbAleaj)==true){
+                                    for(int k=0;k<5;k++){
+                                        Grille[nbAleai+k][nbAleaj]="oo";                               
+                                    }
+                                    nbCroiseur--;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        //On réinitialise la valeur du max
+        max = 14;
+        
+        //Placement des destroyers
+        while(nbDestroyer!=0){
+            //Génération des coordonnées aléatoires         
+            int nbAleai = (int)(Math.random()* (max - min + 1) + min );
+            int nbAleaj = (int)(Math.random()* (max - min + 1) + min );
+            int hor = 1, ver = 2;
+            int orientation = (int)(Math.random()* (ver - hor + hor) + hor);
+            
+            if(estPresent(Grille,nbAleai,nbAleaj)==true){
+                //Placement du navire à l'horizontal
+                if(orientation==1){
+                    if(nbAleaj>=13){
+                        max = 12;
+                        nbAleaj = (int)(Math.random()* (max - min + 1) + min );
+                    }
+                    if(estPresent(Grille,nbAleai,nbAleaj+1)==true){
+                        if(estPresent(Grille,nbAleai,nbAleaj+2)==true){
+                            for(int k=0;k<3;k++){
+                                Grille[nbAleai][nbAleaj+k]="++";
+                            }
+                            nbDestroyer--;
+                        }
+                    }
+                }
+                //Placement du navire à la verticale
+                if(orientation==2){
+                    if(nbAleai>=13){
+                        max = 12;
+                        nbAleai = (int)(Math.random()* (max - min + 1) + min );
+                    }
+                    if(estPresent(Grille,nbAleai+1,nbAleaj)==true){
+                        if(estPresent(Grille,nbAleai+2,nbAleaj)==true){
+                            for(int k=0;k<3;k++){
+                                Grille[nbAleai+k][nbAleaj]="++";                               
+                            }
+                            nbDestroyer--;
+                        }
+                    }
+                }
+            }
+        }
+        //On réinitialise la valeur du max
+        max = 14;
+        
+        //Placement des sous-marins
+        while(nbSMarin!=0){
+            //Génération des coordonnées aléatoires
+            int nbAleai = (int)(Math.random()* (max - min + 1) + min );
+            int nbAleaj = (int)(Math.random()* (max - min + 1) + min );
+            
+            if(estPresent(Grille,nbAleai,nbAleaj)==true){
+                Grille[nbAleai][nbAleaj]="SS";
+                nbSMarin--;
+            }
+        }
+    }
+}

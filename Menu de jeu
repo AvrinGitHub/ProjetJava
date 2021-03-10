@@ -1,1 +1,33 @@
+package projetjava;
 
+import java.util.* ; 
+
+public class MenuDuJeu {
+    public static void menu() {
+                        
+        int nombreMenu;
+
+        System.out.println(" sélectionner 1, 2, 3 ou 4. \n 1: Jouer une partie \n 2. Charger une partie \n 3. Aide (doit expliquer clairement les règles du jeu et les touches du clavier à utiliser lors d’une partie) \n 4. Quitter");
+        nombreMenu = new Scanner(System.in).nextInt();
+        switch( nombreMenu ) {
+            
+            case 1:
+                System.out.println( nombreMenu );
+                break;
+            case 2:
+                System.out.println( nombreMenu );
+                break;
+            case 3:
+                System.out.println( nombreMenu );
+                break;
+            case 4:
+                System.out.println( nombreMenu );
+                break;
+            default:
+                System.out.println( "Entre 1 et 4 svp" );
+                menu();
+        }
+        
+    }
+
+}

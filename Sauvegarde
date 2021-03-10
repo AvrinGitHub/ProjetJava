@@ -1,1 +1,40 @@
+package projetjava;
 
+import java.io.*;
+
+
+public void sauvegarde(String[][] Grille ){
+
+    try 
+
+}
+
+public void lectureFichier( nom du fichier ){
+
+            String tableau []=null ;
+            String chaine="";
+            String fichier ="class.txt";
+    
+            //lecture du fichier texte	
+            try{
+                InputStream ips=new FileInputStream(fichier); 
+                InputStreamReader ipsr=new InputStreamReader(ips);
+                BufferedReader br=new BufferedReader(ipsr);
+                String ligne;
+                for(int i=0;i<tableau.length;i++){
+                while ((ligne=br.readLine())!=null){
+                    tableau[i]=ligne;
+                    System.out.println(tableau);
+    
+                    }
+                }
+                br.close(); 
+                System.out.println("Le fichier " + fichier + " a été créé!");
+            }		
+            catch (Exception e){
+                System.out.println(e.toString());
+            }
+        }
+    }
+
+}

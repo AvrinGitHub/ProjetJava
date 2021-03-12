@@ -1,6 +1,5 @@
 package projetjava;
 
-public void sauvegarde(String[][] Grille ){
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

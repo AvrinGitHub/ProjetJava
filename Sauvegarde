@@ -21,7 +21,7 @@ public static void tabRec(String file , String[][] tab) throws FileNotFoundExcep
             }
         }
 }
-public static void TabRecup(String file ) throws IOException{
+public static String tabRecup(String file ) throws IOException{
     String[][] tab = new String[15][15];
     InputStream is = new FileInputStream(file);
   Reader tmpReader = new InputStreamReader(is, "utf-8");
@@ -41,12 +41,6 @@ public static void TabRecup(String file ) throws IOException{
   } finally {
     reader.close();
   }
-    
-  for (int k =0 ; k<15 ; k++){
-        for (int l=0 ; l<15 ; l++){
-            System.out.print(tab[k][l]);
-        }
-        System.out.println(" ");
-    }
+  return tab ; 
 }
  

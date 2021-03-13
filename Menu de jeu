@@ -11,23 +11,55 @@ public class MenuDuJeu {
         nombreMenu = new Scanner(System.in).nextInt();
         switch( nombreMenu ) {
             
-            case 1:
-                System.out.println( nombreMenu );
+            case 1: //lancer une partie 
+                placemement bateau ... menuDuTour...
                 break;
-            case 2:
-                System.out.println( nombreMenu );
+            case 2: //charger une partie 
+                tableAllie = tabRecup("tableAllie");
+                tableAllieTir = tabRecup("tableAllieTir");
+                tableIa = tabRecup("tableIa");
+                tableIaTir = tabRecup("tableIaTir");
+
                 break;
-            case 3:
-                System.out.println( nombreMenu );
+            case 3: //afficher l'aide 
+                
                 break;
-            case 4:
-                System.out.println( nombreMenu );
+            case 4: //quitter le jeu 
+                
                 break;
             default:
                 System.out.println( "Entre 1 et 4 svp" );
                 menu();
         }
         
+    }
+
+    public static void menuDuTour(){
+
+        int nombreAction;
+        System.out.println("Sélectionner 1, 2, ou 3. 1: Tirer \n 2: Déplacer un bateau qui n'a pas été touché \n 3: quitter et enregistrer la partie \n ")
+        nombreAction = new Scanner(System.in).nextInt();
+        
+        switch( nombreAction ) {
+            
+            case 1: //tirer
+
+                break;
+            case 2: //déplacer bateau
+
+                break;
+            case 3: //quitter et sauvegarder partie 
+                tabRec("tableAllie" , tableAllie);
+                tabRec("tableAllieTir" , tableAllieTir);
+                tabRec("tableIa" , tableIa);
+                tabRec("tableIaTir" , tableIaTir);
+
+                break;
+           
+            default:
+                System.out.println( "Entre 1 et 3 svp" );
+                menu();
+        }
     }
 
 }

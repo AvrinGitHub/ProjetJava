@@ -1,1 +1,30 @@
+public class aide{
+    public static void afficherRegles(){
+        System.out.println("Règles du jeu:");
 
+System.out.println("Le joueur et l’ordinateur disposent chacun de deux grilles de 15*15 cases :");
+System.out.println("- Une grille n°1 pour positionner et visualiser ses navires");
+System.out.println("- Une grille n°2 pour visualiser les dégâts causés à l’adversaire");
+System.out.println("Chaque joueur possède une flotte de 10 navires : 1 cuirassé, 2 croiseurs, 3 destroyers et 4 sous-marins");
+
+System.out.println("Chaque type de navire est de taille différente :");
+System.out.println("-cuirassé : 7 cases");
+System.out.println("-croiseur : 5 cases");
+System.out.println("-destroyer : 3 cases");
+System.out.println("-sous-marin : 1 case");
+
+System.out.println("Les navires sont positionnés aléatoirement au début de la partie.");
+
+System.out.println("A chaque tour de jeu, les joueurs peuvent choisir l’une des 2 actions suivantes sur un seul navire de leur choix de la grille n° 1, en choisissant les coordonnées de l’une des cases du navire :");
+
+System.out.println("Tirer. Le joueur tire en choisissant les coordonnées d’une case valide de l’adversaire         (grille n° 2). A partir tu point d'impact, il faut compter le nombre de cases touchées d’un côté ou/et de l’autre du point d’impact. Chaque destroyer n’est muni que d’une seule fusée éclairante. Le premier tir d’un destroyer dévoile un carré de 4*4 cases dans la grille adverse à partir du coin haut et gauche. Mais attention, les navires adverses de ce carré ne seront visibles que lors du tour du jeu (quelques secondes). Pour couler un navire, il faut avoir touché toutes les cases qu’il occupe : un cuirassé est plus résistant qu’un simple destroyer, les sous-marins ne peuvent être coulés que par d’autres sous-marins. Dans ce cas, le navire adverse coulé disparaît et la case touchée s’affiche sur la grille n° 2.");
+
+System.out.println("Déplacer le navire d’une seule case sauf s’il est touché. Un navire ne peut pas se déplacer en diagonale. Il ne peut se déplacer que dans sa direction horizontale ou verticale, et d'une seule case à la fois, et le point cardinal de déplacement (est ou ouest s’il est horizontal, nord ou sud s’il est vertical). Evidemment, en cas d'obstacle (case de déplacement occupée par un autre navire ou le bord de la grille), un navire ne pourra pas effectuer son déplacement et devra tenter une nouvelle action.");
+
+System.out.println("Le premier qui a coulé toute la flotte de son adversaire a gagné la partie !");
+
+System.out.println("A chaque instant, le joueur peut quitter la partie en cours avec une touche du clavier. La partie est alors sauvegardée dans un fichier. La sauvegarde comprend tous les navires (leur position et type inclus) restant et coulés des grilles.");
+System.out.println("Pour charger une partie, il faut passer par le menu principal et choisir "Charger une partie".")
+
+    }
+}

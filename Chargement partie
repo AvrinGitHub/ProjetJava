@@ -1,1 +1,13 @@
-coucou
+
+public class ChargementPartie{
+
+    public static void chargerUnePartie(){
+
+        tableAllie = tabRecup("tableAllie");
+        tableAllieTir = tabRecup("tableAllieTir");
+        tableIa = tabRecup("tableIa");
+        tableIaTir = tabRecup("tableIaTir");
+    }
+
+
+}

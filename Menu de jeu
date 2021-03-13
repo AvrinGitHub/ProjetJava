@@ -15,14 +15,11 @@ public class MenuDuJeu {
                 placemement bateau ... menuDuTour...
                 break;
             case 2: //charger une partie 
-                tableAllie = tabRecup("tableAllie");
-                tableAllieTir = tabRecup("tableAllieTir");
-                tableIa = tabRecup("tableIa");
-                tableIaTir = tabRecup("tableIaTir");
+               chargerUnePartie();
 
                 break;
             case 3: //afficher l'aide 
-                
+                afficherRegles();
                 break;
             case 4: //quitter le jeu 
                 
@@ -46,7 +43,7 @@ public class MenuDuJeu {
 
                 break;
             case 2: //déplacer bateau
-
+                deplacement 
                 break;
             case 3: //quitter et sauvegarder partie 
                 tabRec("tableAllie" , tableAllie);

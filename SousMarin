@@ -1,0 +1,93 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ *changement
+ */
+package projetjava;
+
+import java.util.Scanner;
+
+/**
+ *
+ * @author Admin
+ */
+public class SousMarin extends Navire {
+
+    Scanner sens = new Scanner(System.in);
+    int choixSens = 0;
+    int i = 0, j = 0;
+    boolean mouvement=false;
+    
+    public static void choixSens(String[][] Grille, int i, int j) {
+        int nombreChoix=0;
+        System.out.println(" Selectionner 1, 2, 3 ou 4. \n 1: Deplacer vers le haut \n 2. Deplacer vers la droite \n 3. Deplacer vers le bas \n 4. Deplacer vers la gauche");
+        nombreChoix = new Scanner(System.in).nextInt();
+        switch( nombreChoix ) {
+            case 1: 
+                if(i!=0 && Grille[i-1][j].equals("  ")){
+                        Grille[i-1][j]=Grille[i][j];
+                        Grille[i][j]="  ";
+                    }
+                    else{
+                        System.out.println("Deplacement impossible.");
+                        System.out.println("Veuillez choisir une nouvelle action.");
+                        choixSens(Grille, i, j);
+                    }
+                break;
+            case 2: 
+               if(j!=14 && Grille[i][j+1].equals("  ")){
+                        Grille[i][j+1]=Grille[i][j];
+                        Grille[i][j]="  ";
+                    }
+                    else{
+                        System.out.println("Deplacement impossible.");
+                        System.out.println("Veuillez choisir une nouvelle action.");
+                        choixSens(Grille, i, j);
+                    }
+                break;
+            case 3:
+                if(i!=14 && Grille[i+1][j].equals("  ")){
+                        Grille[i+1][j]=Grille[i][j];
+                        Grille[i][j]="  ";
+                    }
+                    else{
+                        System.out.println("Deplacement impossible.");
+                        System.out.println("Veuillez choisir une nouvelle action.");
+                        choixSens(Grille, i, j);
+                    }
+                break;
+            case 4:
+                if(j!=0 && Grille[i][j-1].equals("  ")){
+                        Grille[i][j-1]=Grille[i][j];
+                        Grille[i][j]="  ";
+                    }
+                    else{
+                        System.out.println("Deplacement impossible.");
+                        System.out.println("Veuillez choisir une nouvelle action.");
+                        choixSens(Grille, i, j);
+                    }
+                break;
+            default:
+                System.out.println( "Entre 1 et 4 svp" );
+                choixSens(Grille, i, j);
+        }
+    }
+    
+    @Override
+    public void Tir(String sousmarin) {
+        
+    }
+
+    @Override
+    public void Deplacement(String sousmarin, String[][] Grille, int i, int j) {
+        if (sousmarin.equals("SS")){
+            System.out.println("Dans quel sens souhaitez-vous déplacer le sous-marin ?");
+            choixSens(Grille, i, j);         
+        }
+        else{
+            System.out.println("Le navire est coule. Il ne peut pas se deplacer.");
+            System.out.println("Veuillez choisir une autre action.");
+        }
+    }    
+}

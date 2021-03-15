@@ -1,0 +1,214 @@
+public class croiseur extends Navire {
+    
+    public static int testCaseHaut(String[][] Grille, int i, int j){
+        int compteur=0;
+        for (int k=j; k<j+5 ; k++){
+            if (Grille[i-1][k]=="  "){
+            compteur++;
+            }
+        }
+        return compteur;
+    }
+    
+    public static int testCaseBas(String[][] Grille, int i, int j){
+        int compteur=0;
+        for (int k=j; k<j+5 ; k++){
+            if (Grille[i+1][k]=="  "){
+            compteur++;
+            }
+        }
+        return compteur;
+    }
+    
+    public static int testCaseDroite(String[][] Grille, int i, int j){
+        int compteur=0;
+        for (int k=i; k<i+5 ; k++){
+            if (Grille[k][j+1]=="  "){
+            compteur++;
+            }
+        }
+        return compteur;
+    }
+    
+    public static int testCaseGauche(String[][] Grille, int i, int j){
+        int compteur=0;
+        for (int k=i; k<i+5 ; k++){
+            if (Grille[k][j-1]=="  "){
+            compteur++;
+            }
+        }
+        return compteur;
+    }
+    
+    public static void choixSens(String[][] Grille, int i, int j) {
+        int nombreChoix;
+        int orientation;
+        int itemp=i;
+        int jtemp=j;
+        int cpti=0;
+        int cptj=0;
+        
+        System.out.println("Dans quel sens est oriente le croiseur ? 1 H 2 V");
+        orientation = new Scanner(System.in).nextInt();
+        
+        //Horizontal
+        if(orientation==1){
+            while(Grille[i][jtemp].equals("oo")){
+                jtemp++;
+                cptj++;
+            }
+            if(cptj%5==0){
+                System.out.println("Dans quel sens souhaitez-vous déplacer le croiseur ?");
+                System.out.println(" Selectionner 1, 2, 3 ou 4. \n 1: Deplacer vers le haut \n 2. Deplacer vers la droite \n 3. Deplacer vers le bas \n 4. Deplacer vers la gauche");
+                nombreChoix = new Scanner(System.in).nextInt();
+                switch( nombreChoix ) {
+                    case 1: 
+                        if(i!=0 && testCaseHaut(Grille, i, j)==5){
+                            for(int k=0;k<5;k++){
+                                Grille[i-1][j+k]=Grille[i][j+k];
+                                Grille[i][j+k]="  ";
+                                }    
+                            }
+                            else{
+                                System.out.println("Deplacement impossible.");
+                                System.out.println("Veuillez choisir une nouvelle action.");
+                                choixSens(Grille, i, j);
+                            }
+                        break;
+                    case 2: 
+                        if(j+4!=14 && Grille[i][j+5].equals("  ")){
+                                Grille[i][j]="  ";
+                                Grille[i][j+5]="++";
+                            }
+                            else{
+                                System.out.println("Deplacement impossible.");
+                                System.out.println("Veuillez choisir une nouvelle action.");
+                                choixSens(Grille, i, j);
+                            }
+                        break;
+                    case 3:
+                        if(i!=14 && testCaseBas(Grille, i, j)==5){
+                                for(int k=0;k<5;k++){
+                                    Grille[i+1][j+k]=Grille[i][j+k];
+                                    Grille[i][j+k]="  ";
+                                }    
+                            }
+                            else{
+                                System.out.println("Deplacement impossible.");
+                                System.out.println("Veuillez choisir une nouvelle action.");
+                                choixSens(Grille, i, j);
+                            }
+                        break;
+                    case 4:
+                        if(j!=0 && Grille[i][j-1].equals("  ")){
+                                Grille[i][j-1]="++";
+                                Grille[i][j+4]="  ";
+                            }
+                            else{
+                                System.out.println("Deplacement impossible.");
+                                System.out.println("Veuillez choisir une nouvelle action.");
+                                choixSens(Grille, i, j);
+                            }
+                        break;
+                    default:
+                        System.out.println( "Entre 1 et 4 svp" );
+                        choixSens(Grille, i, j);
+                    }
+                } 
+            else{
+                System.out.println("Selection impossible.");
+                //MenuDuJeu.menuDuTour();
+            }
+        }
+        //Vertical
+        else if(orientation==2){
+            while(Grille[itemp][j].equals("++")){
+                itemp++;
+                cpti++;
+            }
+            if(cpti%5==0){
+                System.out.println("Dans quel sens souhaitez-vous déplacer le destroyer ?");
+                System.out.println(" Selectionner 1, 2, 3 ou 4. \n 1: Deplacer vers le haut \n 2. Deplacer vers la droite \n 3. Deplacer vers le bas \n 4. Deplacer vers la gauche");
+                nombreChoix = new Scanner(System.in).nextInt();
+                switch( nombreChoix ) {
+                    case 1: 
+                        if(i!=0 && Grille[i-1][j].equals("  ")){
+                                Grille[i-1][j]="++";
+                                Grille[i+4][j]="  ";
+                            }
+                            else{
+                                System.out.println("Deplacement impossible.");
+                                System.out.println("Veuillez choisir une nouvelle action.");
+                                choixSens(Grille, i, j);
+                            }
+                        break;
+                    case 2: 
+                        if(j!=14 && testCaseDroite(Grille, i, j)==5){
+                                for(int k=0; k<5; k++){
+                                    Grille[i+k][j+1]=Grille[i+k][j];
+                                    Grille[i+k][j]="  ";
+                                }
+                            }
+                            else{
+                                System.out.println("Deplacement impossible.");
+                                System.out.println("Veuillez choisir une nouvelle action.");
+                                choixSens(Grille, i, j);
+                            }
+                        break;
+                    case 3:
+                        if(i+4!=14 && Grille[i+5][j].equals("  ")){
+                                Grille[i+5][j]="++";
+                                Grille[i][j]="  ";
+                            }
+                            else{
+                                System.out.println("Deplacement impossible.");
+                                System.out.println("Veuillez choisir une nouvelle action.");
+                                choixSens(Grille, i, j);
+                            }
+                        break;
+                    case 4:
+                        if(j!=0 && testCaseGauche(Grille, i, j)==5){
+                                for(int k=0; k<5; k++){
+                                    Grille[i+k][j-1]=Grille[i+k][j];
+                                    Grille[i+k][j]="  ";
+                                }
+                            }
+                            else{
+                                System.out.println("Deplacement impossible.");
+                                System.out.println("Veuillez choisir une nouvelle action.");
+                                choixSens(Grille, i, j);
+                            }
+                        break;
+                    default:
+                        System.out.println( "Entre 1 et 4 svp" );
+                        choixSens(Grille, i, j);
+                }
+            }
+            else{
+                System.out.println("Selection impossible.");
+                //MenuDuJeu.menuDuTour();
+            }
+        }
+        else{
+            System.out.println("Selection impossible.");
+            
+        }
+    }
+
+    @Override
+    public void Tir(String navire) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void Deplacement(String croiseur, String[][] Grille, int i, int j) {
+        if (croiseur.equals("++")){
+            choixSens(Grille, i, j);         
+        }
+        else{
+            System.out.println("Le navire est touche. Il ne peut pas se deplacer.");
+            System.out.println("Veuillez choisir une autre action.");
+        }
+    }    
+
+}

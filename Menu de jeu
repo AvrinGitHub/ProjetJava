@@ -7,7 +7,7 @@ public class MenuDuJeu {
                         
         int nombreMenu;
 
-        System.out.println(" sélectionner 1, 2, 3 ou 4. \n 1: Jouer une partie \n 2. Charger une partie \n 3. afficher l'aide \n 4. Quitter");
+        System.out.println(" sélectionner 1, 2, 3 ou 4. \n 1: Jouer une partie \n 2. Charger une partie \n 3. Aide (doit expliquer clairement les règles du jeu et les touches du clavier à utiliser lors d’une partie) \n 4. Quitter");
         nombreMenu = new Scanner(System.in).nextInt();
         switch( nombreMenu ) {
             
@@ -55,7 +55,7 @@ public class MenuDuJeu {
            
             default:
                 System.out.println( "Entre 1 et 3 svp" );
-                menuDuTour();
+                menu();
         }
     }
 

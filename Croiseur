@@ -78,7 +78,7 @@ public class croiseur extends Navire {
                     case 1: 
                         if(j+4!=14 && Grille[i][j+5].equals("  ")){
                                 Grille[i][j]="  ";
-                                Grille[i][j+5]="++";
+                                Grille[i][j+5]="oo";
                             }
                             else{
                                 System.out.println("Deplacement impossible.");
@@ -101,7 +101,7 @@ public class croiseur extends Navire {
                         break;*/
                     case 2:
                         if(j!=0 && Grille[i][j-1].equals("  ")){
-                                Grille[i][j-1]="++";
+                                Grille[i][j-1]="oo";
                                 Grille[i][j+4]="  ";
                             }
                             else{
@@ -133,7 +133,7 @@ public class croiseur extends Navire {
                 switch( nombreChoix ) {
                     case 1: 
                         if(i!=0 && Grille[i-1][j].equals("  ")){
-                                Grille[i-1][j]="++";
+                                Grille[i-1][j]="oo";
                                 Grille[i+4][j]="  ";
                             }
                             else{
@@ -157,7 +157,7 @@ public class croiseur extends Navire {
                         break;*/
                     case 2:
                         if(i+4!=14 && Grille[i+5][j].equals("  ")){
-                                Grille[i+5][j]="++";
+                                Grille[i+5][j]="oo";
                                 Grille[i][j]="  ";
                             }
                             else{
@@ -203,7 +203,7 @@ public class croiseur extends Navire {
 
     @Override
     public void Deplacement(String croiseur, String[][] Grille, int i, int j) {
-        if (croiseur.equals("++")){
+        if (croiseur.equals("oo")){
             choixSens(Grille, i, j);         
         }
         else{

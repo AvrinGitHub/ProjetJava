@@ -191,6 +191,7 @@ public class croiseur extends Navire {
         }
         else{
             System.out.println("Selection impossible.");
+            //MenuDuJeu.menuDuTour();
             
         }
     }
@@ -208,6 +209,7 @@ public class croiseur extends Navire {
         else{
             System.out.println("Le navire est touche. Il ne peut pas se deplacer.");
             System.out.println("Veuillez choisir une autre action.");
+            //MenuDuJeu.menuDuTour();
         }
     }    
 

@@ -61,28 +61,31 @@ public class MenuDuJeu {
         }
     }
 
-    public static void menuBateau(){
+    public static void menuBateau(int i , int j){
 
         int nombreAction;
-        System.out.println("Sélectionner 1, 2, ou 3. 1: sousMarin \n 2: cuirasse \n 3: croiseur 4:destroyer \n ")
+        System.out.println("Sélectionner 1, 2, ou 3. 1: sousMarin \n 2: destroyer \n 3: croiseur 4: cuirasse \n ")
         nombreAction = new Scanner(System.in).nextInt();
         
         switch( nombreAction ) {
             
             case 1: //sousmarin
 
-                sousMarin.deplacement();
+                sousMarin.deplacement(sousMarin, Grille , i , j);
                 break;
 
-            case 2: //cuirasse
-                cuirasse.deplacement();
+            case 2: //destroyer
+
+                destroyer.deplacement( destroyer , Grille , i , j);
                 break;
             case 3: //croiseur  
-                croiseur.deplacement();
+
+                croiseur.deplacement( croiseur , Grille , i , j);
                 break;
 
             case 4: //cuirasse
-                cuirasse.deplacement();
+            
+                cuirasse.deplacement(Grille , i , j );
                 break; 
            
             default:

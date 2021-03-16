@@ -83,7 +83,7 @@ public class croiseur extends Navire {
                             else{
                                 System.out.println("Deplacement impossible.");
                                 System.out.println("Veuillez choisir une nouvelle action.");
-                                menuDuTour();
+                                //MenuDuJeu.menuDuTour();;
                             }
                         break;
                     /*case 3:
@@ -107,12 +107,12 @@ public class croiseur extends Navire {
                             else{
                                 System.out.println("Deplacement impossible.");
                                 System.out.println("Veuillez choisir une nouvelle action.");
-                                menuDuTour;
+                                //MenuDuJeu.menuDuTour();;
                             }
                         break;
                     default:
                         System.out.println( "Entre 1 et 2 svp" );
-                        menuDuTour();
+                        //MenuDuJeu.menuDuTour();;
                     }
                 } 
             else{
@@ -126,7 +126,7 @@ public class croiseur extends Navire {
                 itemp++;
                 cpti++;
             }
-            if(cpti%5==0){
+            if(cpti>4){
                 System.out.println("Dans quel sens souhaitez-vous déplacer le destroyer ?");
                 System.out.println(" Selectionner 1, 2, 3 ou 4. \n 1: Deplacer vers le haut \n 2. Deplacer vers la droite \n 3. Deplacer vers le bas \n 4. Deplacer vers la gauche");
                 nombreChoix = new Scanner(System.in).nextInt();
@@ -139,10 +139,10 @@ public class croiseur extends Navire {
                             else{
                                 System.out.println("Deplacement impossible.");
                                 System.out.println("Veuillez choisir une nouvelle action.");
-                                choixSens(Grille, i, j);
+                                //MenuDuJeu.menuDuTour();;
                             }
                         break;
-                    case 2: 
+                    /*case 2: 
                         if(j!=14 && testCaseDroite(Grille, i, j)==5){
                                 for(int k=0; k<5; k++){
                                     Grille[i+k][j+1]=Grille[i+k][j];
@@ -154,8 +154,8 @@ public class croiseur extends Navire {
                                 System.out.println("Veuillez choisir une nouvelle action.");
                                 choixSens(Grille, i, j);
                             }
-                        break;
-                    case 3:
+                        break;*/
+                    case 2:
                         if(i+4!=14 && Grille[i+5][j].equals("  ")){
                                 Grille[i+5][j]="++";
                                 Grille[i][j]="  ";
@@ -163,10 +163,10 @@ public class croiseur extends Navire {
                             else{
                                 System.out.println("Deplacement impossible.");
                                 System.out.println("Veuillez choisir une nouvelle action.");
-                                choixSens(Grille, i, j);
+                                //MenuDuJeu.menuDuTour();;
                             }
                         break;
-                    case 4:
+                    /*case 4:
                         if(j!=0 && testCaseGauche(Grille, i, j)==5){
                                 for(int k=0; k<5; k++){
                                     Grille[i+k][j-1]=Grille[i+k][j];
@@ -178,10 +178,10 @@ public class croiseur extends Navire {
                                 System.out.println("Veuillez choisir une nouvelle action.");
                                 choixSens(Grille, i, j);
                             }
-                        break;
+                        break;*/
                     default:
-                        System.out.println( "Entre 1 et 4 svp" );
-                        choixSens(Grille, i, j);
+                        System.out.println( "Entre 1 et 2 svp" );
+                        //MenuDuJeu.menuDuTour();;
                 }
             }
             else{

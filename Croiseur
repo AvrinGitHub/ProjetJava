@@ -1,5 +1,18 @@
-public class croiseur extends Navire {
-    
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package projetjava;
+
+import java.util.Scanner;
+
+/**
+ *
+ * @author Admin
+ */
+    public class Croiseur extends Navire {
+    /*
     public static int testCaseHaut(String[][] Grille, int i, int j){
         int compteur=0;
         for (int k=j; k<j+5 ; k++){
@@ -39,8 +52,9 @@ public class croiseur extends Navire {
         }
         return compteur;
     }
-    
-    public static void choixSens(String[][] Grille, int i, int j) {
+    */
+        
+    public void choixSens(String[][] Grille, int i, int j) {
         int nombreChoix;
         int orientation;
         int itemp=i;
@@ -214,3 +228,4 @@ public class croiseur extends Navire {
     }    
 
 }
+

@@ -72,6 +72,7 @@ public class Destroyer extends Navire {
                 jtemp++;
                 cptj++;
             }
+            feziu
             if(cptj>2){
                 System.out.println("Dans quel sens souhaitez-vous déplacer le destroyer ?");
                 System.out.println(" Selectionner 1 ou 2. \n 1: Deplacer vers la droite \n 2. Deplacer vers la gauche");

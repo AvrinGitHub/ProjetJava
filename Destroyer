@@ -61,7 +61,9 @@ public class Destroyer extends Navire {
         int cpti=0;
         int cptj=0;
         
-        System.out.println("Dans quel sens est oriente le destroyer ? 1 H 2 V");
+        System.out.println("Dans quel sens est oriente le destroyer ?");
+        System.out.println("Horizontal : 1");
+        System.out.println("Vertical : 2");
         orientation = new Scanner(System.in).nextInt();
         
         //Horizontal
@@ -70,25 +72,12 @@ public class Destroyer extends Navire {
                 jtemp++;
                 cptj++;
             }
-            if(cptj%3==0){
+            if(cptj>2){
                 System.out.println("Dans quel sens souhaitez-vous déplacer le destroyer ?");
-                System.out.println(" Selectionner 1, 2, 3 ou 4. \n 1: Deplacer vers le haut \n 2. Deplacer vers la droite \n 3. Deplacer vers le bas \n 4. Deplacer vers la gauche");
+                System.out.println(" Selectionner 1 ou 2. \n 1: Deplacer vers la droite \n 2. Deplacer vers la gauche");
                 nombreChoix = new Scanner(System.in).nextInt();
                 switch( nombreChoix ) {
                     case 1: 
-                        if(i!=0 && testCaseHaut(Grille, i, j)==3){
-                            for(int k=0;k<3;k++){
-                                Grille[i-1][j+k]=Grille[i][j+k];
-                                Grille[i][j+k]="  ";
-                                }    
-                            }
-                            else{
-                                System.out.println("Deplacement impossible.");
-                                System.out.println("Veuillez choisir une nouvelle action.");
-                                choixSens(Grille, i, j);
-                            }
-                        break;
-                    case 2: 
                         if(j+2!=14 && Grille[i][j+3].equals("  ")){
                                 Grille[i][j]="  ";
                                 Grille[i][j+3]="++";
@@ -96,23 +85,10 @@ public class Destroyer extends Navire {
                             else{
                                 System.out.println("Deplacement impossible.");
                                 System.out.println("Veuillez choisir une nouvelle action.");
-                                choixSens(Grille, i, j);
+                                //MenuDuJeu.menuDuTour();
                             }
                         break;
-                    case 3:
-                        if(i!=14 && testCaseBas(Grille, i, j)==3){
-                                for(int k=0;k<3;k++){
-                                    Grille[i+1][j+k]=Grille[i][j+k];
-                                    Grille[i][j+k]="  ";
-                                }    
-                            }
-                            else{
-                                System.out.println("Deplacement impossible.");
-                                System.out.println("Veuillez choisir une nouvelle action.");
-                                choixSens(Grille, i, j);
-                            }
-                        break;
-                    case 4:
+                    case 2:
                         if(j!=0 && Grille[i][j-1].equals("  ")){
                                 Grille[i][j-1]="++";
                                 Grille[i][j+2]="  ";
@@ -120,12 +96,12 @@ public class Destroyer extends Navire {
                             else{
                                 System.out.println("Deplacement impossible.");
                                 System.out.println("Veuillez choisir une nouvelle action.");
-                                choixSens(Grille, i, j);
+                                //MenuDuJeu.menuDuTour();
                             }
                         break;
                     default:
                         System.out.println( "Entre 1 et 4 svp" );
-                        choixSens(Grille, i, j);
+                        //MenuDuJeu.menuDuTour();
                     }
                 } 
             else{
@@ -139,9 +115,9 @@ public class Destroyer extends Navire {
                 itemp++;
                 cpti++;
             }
-            if(cpti%3==0){
+            if(cpti>2){
                 System.out.println("Dans quel sens souhaitez-vous déplacer le destroyer ?");
-                System.out.println(" Selectionner 1, 2, 3 ou 4. \n 1: Deplacer vers le haut \n 2. Deplacer vers la droite \n 3. Deplacer vers le bas \n 4. Deplacer vers la gauche");
+                System.out.println(" Selectionner 1 ou 2. \n 1: Deplacer vers le haut \n 2. Deplacer vers le bas \n");
                 nombreChoix = new Scanner(System.in).nextInt();
                 switch( nombreChoix ) {
                     case 1: 
@@ -152,23 +128,10 @@ public class Destroyer extends Navire {
                             else{
                                 System.out.println("Deplacement impossible.");
                                 System.out.println("Veuillez choisir une nouvelle action.");
-                                choixSens(Grille, i, j);
+                                //MenuDuJeu.menuDuTour();
                             }
                         break;
                     case 2: 
-                        if(j!=14 && testCaseDroite(Grille, i, j)==3){
-                                for(int k=0; k<3; k++){
-                                    Grille[i+k][j+1]=Grille[i+k][j];
-                                    Grille[i+k][j]="  ";
-                                }
-                            }
-                            else{
-                                System.out.println("Deplacement impossible.");
-                                System.out.println("Veuillez choisir une nouvelle action.");
-                                choixSens(Grille, i, j);
-                            }
-                        break;
-                    case 3:
                         if(i+2!=14 && Grille[i+3][j].equals("  ")){
                                 Grille[i+3][j]="++";
                                 Grille[i][j]="  ";
@@ -176,25 +139,12 @@ public class Destroyer extends Navire {
                             else{
                                 System.out.println("Deplacement impossible.");
                                 System.out.println("Veuillez choisir une nouvelle action.");
-                                choixSens(Grille, i, j);
-                            }
-                        break;
-                    case 4:
-                        if(j!=0 && testCaseGauche(Grille, i, j)==3){
-                                for(int k=0; k<3; k++){
-                                    Grille[i+k][j-1]=Grille[i+k][j];
-                                    Grille[i+k][j]="  ";
-                                }
-                            }
-                            else{
-                                System.out.println("Deplacement impossible.");
-                                System.out.println("Veuillez choisir une nouvelle action.");
-                                choixSens(Grille, i, j);
+                                //MenuDuJeu.menuDuTour();
                             }
                         break;
                     default:
-                        System.out.println( "Entre 1 et 4 svp" );
-                        choixSens(Grille, i, j);
+                        System.out.println( "Entre 1 et 2 svp" );
+                        //MenuDuJeu.menuDuTour();
                 }
             }
             else{

@@ -10,7 +10,7 @@ import java.io.PrintWriter;
 import java.io.Reader;
 import java.util.ArrayList;
 
-public class sauvegarde{
+public class Sauvegarde{
 @SuppressWarnings("empty-statement")
 public static void tabRec(String file , String[][] tab) throws FileNotFoundException{
     
@@ -22,7 +22,7 @@ public static void tabRec(String file , String[][] tab) throws FileNotFoundExcep
             }
         }
 }
-public static String tabRecup(String file ) throws IOException{
+public static String[][] tabRecup(String file ) throws IOException{
     String[][] tab = new String[15][15];
     InputStream is = new FileInputStream(file);
   Reader tmpReader = new InputStreamReader(is, "utf-8");
@@ -42,7 +42,7 @@ public static String tabRecup(String file ) throws IOException{
   } finally {
     reader.close();
   }
-  return tab ; 
+  return tab; 
 }
 }
 

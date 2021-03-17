@@ -108,4 +108,29 @@ public class MenuDuJeu {
         }
     }
 
+    public static void menuDuTourIA(String [][] tableAllie, String[][] tableAllieTir, String[][] tableIa, String[][] tableIaTir){
+
+        int max=2;
+        int min=1;
+        int nombreAction = (int)(Math.random() * (max - min) );
+        
+        
+        
+        switch( nombreAction ) {
+            
+            case 1: //tirer
+
+                break;
+            case 2: //déplacer bateau
+                int maxi=14;
+                int mini=0;
+                
+                int i = (int)(Math.random() * (maxi - mini));
+                int j = (int)(Math.random() * (maxi - mini));
+                menuBateau(tableIa , i , j);
+                break;
+            
+        }
+    }
+
 }

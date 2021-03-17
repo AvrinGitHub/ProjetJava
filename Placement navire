@@ -15,15 +15,16 @@ public class PlacementBateau {
         
         return Grille[i][j].equals("  ");
     }
-    
-    public static void placement(String[][] Grille){
+
+    public static void placement(String[][] Grille , int[][] coordonneBateau ){
         
+        coordonneBateau = new int[10][4] /* ligne , colonne , orientation, type de bateau*/
         int nbSMarin = 4;
         int nbDestroyer = 3;
         int nbCroiseur = 2;
         int nbCuirasse = 1;
         int max = 14, min = 0;
-        
+        int i=0; 
         //Placement du cuirassé
         while(nbCuirasse!=0){
             //Génération des coordonnées aléatoires
@@ -48,7 +49,12 @@ public class PlacementBateau {
                                             for(int k=0;k<7;k++){
                                                 Grille[nbAleai][nbAleaj+k]="**";                               
                                                 }
-                                            nbCuirasse--;    
+                                            coordonneBateau[i][0]= nbAleai;
+                                            coordonneBateau[i][1]= nbAleaj;
+                                            coordonneBateau[i][2]= orientation;
+                                            coordonneBateau[i][3]= 4; 
+                                            i++;  
+                                            nbCuirasse--;   
                                         }
                                     }
                                     
@@ -73,6 +79,11 @@ public class PlacementBateau {
                                             for(int k=0;k<7;k++){
                                                 Grille[nbAleai+k][nbAleaj]="**";                               
                                                 }
+                                            coordonneBateau[i][0]= nbAleai;
+                                            coordonneBateau[i][1]= nbAleaj;
+                                            coordonneBateau[i][2]= orientation;
+                                            coordonneBateau[i][3]= 4 ; 
+                                            i++;  
                                             nbCuirasse--;
                                         }
                                     }
@@ -108,6 +119,11 @@ public class PlacementBateau {
                                     for(int k=0;k<5;k++){
                                         Grille[nbAleai][nbAleaj+k]="oo";                               
                                     }
+                                    coordonneBateau[i][0]= nbAleai;
+                                    coordonneBateau[i][1]= nbAleaj;
+                                    coordonneBateau[i][2]= orientation;
+                                    coordonneBateau[i][3]= 3;
+                                    i++;  
                                     nbCroiseur--;
                                 }
                             }
@@ -127,6 +143,11 @@ public class PlacementBateau {
                                     for(int k=0;k<5;k++){
                                         Grille[nbAleai+k][nbAleaj]="oo";                               
                                     }
+                                    coordonneBateau[i][0]= nbAleai;
+                                    coordonneBateau[i][1]= nbAleaj;
+                                    coordonneBateau[i][2]= orientation;
+                                    coordonneBateau[i][3]= 3 ; 
+                                    i++;  
                                     nbCroiseur--;
                                 }
                             }
@@ -158,6 +179,11 @@ public class PlacementBateau {
                             for(int k=0;k<3;k++){
                                 Grille[nbAleai][nbAleaj+k]="++";
                             }
+                            coordonneBateau[i][0]= nbAleai;
+                            coordonneBateau[i][1]= nbAleaj;
+                            coordonneBateau[i][2]= orientation;
+                            coordonneBateau[i][3]= 2;  
+                            i++;  
                             nbDestroyer--;
                         }
                     }
@@ -173,7 +199,13 @@ public class PlacementBateau {
                             for(int k=0;k<3;k++){
                                 Grille[nbAleai+k][nbAleaj]="++";                               
                             }
+                            coordonneBateau[i][0]= nbAleai;
+                            coordonneBateau[i][1]= nbAleaj;
+                            coordonneBateau[i][2]= orientation;
+                            coordonneBateau[i][3]= 2;  
+                            i++; 
                             nbDestroyer--;
+                            
                         }
                     }
                 }
@@ -190,6 +222,11 @@ public class PlacementBateau {
             
             if(estPresent(Grille,nbAleai,nbAleaj)==true){
                 Grille[nbAleai][nbAleaj]="SS";
+                coordonneBateau[i][0]= nbAleai;
+                coordonneBateau[i][1]= nbAleaj;
+                coordonneBateau[i][2]= orientation;
+                coordonneBateau[i][3]= 1;  
+                i++; 
                 nbSMarin--;
             }
         }

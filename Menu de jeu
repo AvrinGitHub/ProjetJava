@@ -19,7 +19,12 @@ public class MenuDuJeu {
         switch( nombreMenu ) {
             
             case 1: //lancer une partie 
-                MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                int[][] coordonneBateauAllie;
+                int[][] coordonneBateauIa; 
+                PlacementBateau.placement(tableAllie , coordonneBateauAllie);
+                PlacementBateau.placement(tableIa , coordonneBateauIa);
+
+                MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur, coordonneBateauAllie, coordonneBateauIa);
                 break;
             case 2: //charger une partie 
                ChargementPartie.chargerUnePartie(tableAllie, tableAllieTir, tableIa, tableIaTir);
@@ -38,7 +43,7 @@ public class MenuDuJeu {
         
     }
 
-    public static void menuDuTour(String [][] tableAllie, String[][] tableAllieTir, String[][] tableIa, String[][] tableIaTir, int tourJoueur) throws FileNotFoundException, IOException{
+    public static void menuDuTour(String [][] tableAllie, String[][] tableAllieTir, String[][] tableIa, String[][] tableIaTir, int tourJoueur, int[][] coordonneBateauAllie , int[][] coordonneBateauIa) throws FileNotFoundException, IOException{
 
         int nombreAction;
         System.out.println("Sélectionner 1, 2, ou 3. 1: Tirer \n 2: Déplacer un bateau qui n'a pas été touché \n 3: quitter et enregistrer la partie \n ");
@@ -49,7 +54,7 @@ public class MenuDuJeu {
             case 1: //tirer
 
                 tourJoueur++;
-                MenuDuJeu.menuDuTourIA(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                MenuDuJeu.menuDuTourIA(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                 break;
             case 2: //déplacer bateau
                 int selectioni;
@@ -66,7 +71,7 @@ public class MenuDuJeu {
 
                 menuBateau(tableAllie, selectioni, selectionj , tourJoueur);
                 tourJoueur++;
-                MenuDuJeu.menuDuTourIA(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                MenuDuJeu.menuDuTourIA(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                 break;
             case 3: //quitter et sauvegarder partie et revenir au menu  
                 Sauvegarde.tabRec("tableAllie" , tableAllie);
@@ -82,7 +87,7 @@ public class MenuDuJeu {
         }
     }
 
-    public static void menuBateau(String[][] Grille, int i , int j, int tourJoueur) throws IOException{
+    public static void menuBateau(String[][] Grille, int i , int j, int tourJoueur , int[][] coordonneBateauAllie , int[][] coordonneBateauIa) throws IOException{
 
         int nombreAction;
         System.out.println("Sélectionner 1, 2, ou 3. 1: sousMarin \n 2: destroyer \n 3: croiseur 4: cuirasse \n ");
@@ -93,24 +98,24 @@ public class MenuDuJeu {
             case 1: //sousmarin
                 SousMarin sousmarin = new SousMarin();
                 String sousmarinstrg = Grille[i][j];
-                sousmarin.Deplacement(sousmarinstrg, Grille, i, j);
+                sousmarin.Deplacement(sousmarinstrg, Grille, i, j , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                 break;
 
             case 2: //destroyer
                 Destroyer destroyer = new Destroyer();
                 String destroyerstrg = Grille[i][j];
-                destroyer.Deplacement(destroyerstrg, Grille, i, j);
+                destroyer.Deplacement(destroyerstrg, Grille, i, j , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                 break;
             case 3: //croiseur  
                 Croiseur croiseur = new Croiseur();
                 String croiseurstrg = Grille[i][j];
-                croiseur.Deplacement(croiseurstrg, Grille, i, j);
+                croiseur.Deplacement(croiseurstrg, Grille, i, j , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                 break;
 
             case 4: //cuirasse
                 Cuirasse cuirasse = new Cuirasse();
                 String cuirassestrg = Grille[i][j];
-                cuirasse.Deplacement(cuirassestrg, Grille, i, j);
+                cuirasse.Deplacement(cuirassestrg, Grille, i, j , tourJoueur , coordonneBateauAllie, coordonneBateauIa);
                 break; 
            
             default:
@@ -119,7 +124,7 @@ public class MenuDuJeu {
         }
     }
 
-    public static void menuDuTourIA(String [][] tableAllie, String[][] tableAllieTir, String[][] tableIa, String[][] tableIaTir){
+    public static void menuDuTourIA(String [][] tableAllie, String[][] tableAllieTir, String[][] tableIa, String[][] tableIaTir , int tourJoueur , int[][] coordonneBateauAllie , int[][] coordonneBateauIa){
 
         int max=2;
         int min=1;
@@ -132,7 +137,7 @@ public class MenuDuJeu {
             case 1: //tirer
                 
                 tourJoueur++;
-                MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir);
+                MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa );
                 break;
             case 2: //déplacer bateau
                 int maxi=14;
@@ -140,9 +145,9 @@ public class MenuDuJeu {
                 
                 int i = (int)(Math.random() * (maxi - mini));
                 int j = (int)(Math.random() * (maxi - mini));
-                menuBateau(tableIa , i , j);
+                menuBateau(tableIa , i , j , tourJoueur, coordonneBateauAllie , coordonneBateauIa);
                 tourJoueur++;
-                MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir);
+                MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                 break;
             
         }

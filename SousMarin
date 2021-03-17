@@ -16,7 +16,7 @@ public class SousMarin extends Navire {
     Scanner sens = new Scanner(System.in);
     int choixSens = 0;
     
-    public static void choixSens(String[][] Grille, int i, int j , int tourJoueur) {
+    public static void choixSens(String[][] Grille, int i, int j , int tourJoueur , int[][] coordonneBateauAllie , int[][] coordonneBateauIa) {
         int nombreChoix=0;
         System.out.println(" Selectionner 1, 2, 3 ou 4. \n 1: Deplacer vers le haut \n 2. Deplacer vers la droite \n 3. Deplacer vers le bas \n 4. Deplacer vers la gauche");
         nombreChoix = new Scanner(System.in).nextInt();
@@ -102,19 +102,19 @@ public class SousMarin extends Navire {
     }
 
     @Override
-    public void Deplacement(String sousmarin, String[][] Grille, int i, int j , int tourJoueur) {
+    public void Deplacement(String sousmarin, String[][] Grille, int i, int j , int tourJoueur , int[][] coordonneBateauAllie , int[][] coordonneBateauIa) {
         if (sousmarin.equals("SS")){
             System.out.println("Dans quel sens souhaitez-vous déplacer le sous-marin ?");
-            choixSens(Grille, i, j , tourJoueur);         
+            choixSens(Grille, i, j , tourJoueur, coordonneBateauAllie, coordonneBateauIa);         
         }
         else{
             System.out.println("Le navire est coule. Il ne peut pas se deplacer.");
             System.out.println("Veuillez choisir une autre action.");
             if (tourJoueur%2==0){
-                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie, coordonneBateauIa );
                         }
             if (tourJoueur%2==1){
-                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                         }
         }
     }    

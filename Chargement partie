@@ -1,13 +1,26 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package projetjava;
 
+import java.io.IOException;
+
+/**
+ *
+ * @author Admin
+ */
 public class ChargementPartie{
 
-    public static void chargerUnePartie(){
+    public static void chargerUnePartie(String[][] tableAllie, String[][] tableAllieTir, String[][] tableIa, String[][] tableIaTir) throws IOException{
 
-        tableAllie = tabRecup("tableAllie");
-        tableAllieTir = tabRecup("tableAllieTir");
-        tableIa = tabRecup("tableIa");
-        tableIaTir = tabRecup("tableIaTir");
+        tableAllie = Sauvegarde.tabRecup("tableAllie");
+        tableAllieTir = Sauvegarde.tabRecup("tableAllieTir");
+        tableIa = Sauvegarde.tabRecup("tableIa");
+        tableIaTir = Sauvegarde.tabRecup("tableIaTir");
     }
 
 
 }
+

@@ -13,7 +13,7 @@ import java.util.Scanner;
  */
 public class Cuirasse extends Navire {
 
-    public static void choixSens(String[][] Grille, int i, int j, int tourJoueur) {
+    public static void choixSens(String[][] Grille, int i, int j, int tourJoueur , int[][] coordonneBateauAllie , int[][] coordonneBateauIa) {
         int nombreChoix;
         int orientation;
         int itemp=i;
@@ -170,18 +170,18 @@ public class Cuirasse extends Navire {
     }
 
     @Override
-    public void Deplacement(String cuirasse, String[][] Grille, int i, int j, tourJoueur) {
+    public void Deplacement(String cuirasse, String[][] Grille, int i, int j, tourJoueur , int[][] coordonneBateauAllie , int[][] coordonneBateauIa) {
         if (cuirasse.equals("**")){
-            choixSens(Grille, i, j, tourJoueur);         
+            choixSens(Grille, i, j, tourJoueur , coordonneBateauAllie , coordonneBateauIa);         
         }
         else{
             System.out.println("Le navire est touche. Il ne peut pas se deplacer.");
             System.out.println("Veuillez choisir une autre action.");
             if (tourJoueur%2==0){
-                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                         }
             if (tourJoueur%2==1){
-                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                         }
         }
     }    

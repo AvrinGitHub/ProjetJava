@@ -54,7 +54,7 @@ import java.util.Scanner;
     }
     */
         
-    public void choixSens(String[][] Grille, int i, int j , int tourJoueur) {
+    public void choixSens(String[][] Grille, int i, int j , int tourJoueur, int[][] coordonneBateauAllie , int[][] coordonneBateauIa) {
         int nombreChoix;
         int orientation;
         int itemp=i;
@@ -261,18 +261,18 @@ import java.util.Scanner;
     }
 
     @Override
-    public void Deplacement(String croiseur, String[][] Grille, int i, int j , int tourJoueur) {
+    public void Deplacement(String croiseur, String[][] Grille, int i, int j , int tourJoueur , int[][] coordonneBateauAllie , int[][] coordonneBateauIa) {
         if (croiseur.equals("oo")){
-            choixSens(Grille, i, j , tourJoueur);         
+            choixSens(Grille, i, j , tourJoueur , coordonneBateauAllie , coordonneBateauIa);         
         }
         else{
             System.out.println("Le navire est touche. Il ne peut pas se deplacer.");
             System.out.println("Veuillez choisir une autre action.");
             if (tourJoueur%2==0){
-                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                         }
             if (tourJoueur%2==1){
-                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                         }
         }
     }    

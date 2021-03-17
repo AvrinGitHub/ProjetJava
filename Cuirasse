@@ -1,0 +1,136 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package projetjava;
+
+import java.util.Scanner;
+
+/**
+ *
+ * @author Admin
+ */
+public class Cuirasse extends Navire {
+
+    public static void choixSens(String[][] Grille, int i, int j) {
+        int nombreChoix;
+        int orientation;
+        int itemp=i;
+        int jtemp=j;
+        int cpti=0;
+        int cptj=0;
+        
+        System.out.println("Dans quel sens est oriente le destroyer ?");
+        System.out.println("Horizontal : 1");
+        System.out.println("Vertical : 2");
+        orientation = new Scanner(System.in).nextInt();
+        
+        //Horizontal
+        if(orientation==1){
+            while(Grille[i][jtemp].equals("**")){
+                jtemp++;
+                cptj++;
+            }
+            if(cptj>6){
+                System.out.println("Dans quel sens souhaitez-vous déplacer le destroyer ?");
+                System.out.println(" Selectionner 1 ou 2. \n 1: Deplacer vers la droite \n 2. Deplacer vers la gauche");
+                nombreChoix = new Scanner(System.in).nextInt();
+                switch( nombreChoix ) {
+                    case 1: 
+                        if(j+6!=14 && Grille[i][j+7].equals("  ")){
+                                Grille[i][j]="  ";
+                                Grille[i][j+7]="**";
+                            }
+                            else{
+                                System.out.println("Deplacement impossible.");
+                                System.out.println("Veuillez choisir une nouvelle action.");
+                                //MenuDuJeu.menuDuTour();
+                            }
+                        break;
+                    case 2:
+                        if(j!=0 && Grille[i][j-1].equals("  ")){
+                                Grille[i][j-1]="**";
+                                Grille[i][j+6]="  ";
+                            }
+                            else{
+                                System.out.println("Deplacement impossible.");
+                                System.out.println("Veuillez choisir une nouvelle action.");
+                                //MenuDuJeu.menuDuTour();
+                            }
+                        break;
+                    default:
+                        System.out.println( "Entre 1 et 2 svp" );
+                        //MenuDuJeu.menuDuTour();
+                    }
+                } 
+            else{
+                System.out.println("Selection impossible.");
+                //MenuDuJeu.menuDuTour();
+            }
+        }
+        //Vertical
+        else if(orientation==2){
+            while(Grille[itemp][j].equals("**")){
+                itemp++;
+                cpti++;
+            }
+            if(cpti>6){
+                System.out.println("Dans quel sens souhaitez-vous déplacer le destroyer ?");
+                System.out.println(" Selectionner 1 ou 2. \n 1: Deplacer vers le haut \n 2. Deplacer vers le bas \n");
+                nombreChoix = new Scanner(System.in).nextInt();
+                switch( nombreChoix ) {
+                    case 1: 
+                        if(i!=0 && Grille[i-1][j].equals("  ")){
+                                Grille[i-1][j]="**";
+                                Grille[i+6][j]="  ";
+                            }
+                            else{
+                                System.out.println("Deplacement impossible.");
+                                System.out.println("Veuillez choisir une nouvelle action.");
+                                //MenuDuJeu.menuDuTour();
+                            }
+                        break;
+                    case 2: 
+                        if(i+6!=14 && Grille[i+7][j].equals("  ")){
+                                Grille[i+7][j]="**";
+                                Grille[i][j]="  ";
+                            }
+                            else{
+                                System.out.println("Deplacement impossible.");
+                                System.out.println("Veuillez choisir une nouvelle action.");
+                                //MenuDuJeu.menuDuTour();
+                            }
+                        break;
+                    default:
+                        System.out.println( "Entre 1 et 4 svp" );
+                        //MenuDuJeu.menuDuTour();
+                }
+            }
+            else{
+                System.out.println("Selection impossible.");
+                //MenuDuJeu.menuDuTour();
+            }
+        }
+        else{
+            System.out.println("Selection impossible.");
+            
+        }
+    }
+    
+    @Override
+    public void Tir(String navire) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void Deplacement(String cuirasse, String[][] Grille, int i, int j) {
+        if (cuirasse.equals("**")){
+            choixSens(Grille, i, j);         
+        }
+        else{
+            System.out.println("Le navire est touche. Il ne peut pas se deplacer.");
+            System.out.println("Veuillez choisir une autre action.");
+        }
+    }    
+}

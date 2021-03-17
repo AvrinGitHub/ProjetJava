@@ -147,4 +147,15 @@ public class MenuDuJeu {
             
         }
     }
+
+    public static void finDePartie(String[] listeBateauAlliee , String [] listeBateauIa){
+        
+        if (listeBateauAlliee== null){
+            System.out.println("vous avez perdu");
+        }
+        if ( listeBateauIa== null){
+            System.out.println("vous avez gagné");
+        }
+        
+    }
 }

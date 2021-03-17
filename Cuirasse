@@ -13,7 +13,7 @@ import java.util.Scanner;
  */
 public class Cuirasse extends Navire {
 
-    public static void choixSens(String[][] Grille, int i, int j) {
+    public static void choixSens(String[][] Grille, int i, int j, int tourJoueur) {
         int nombreChoix;
         int orientation;
         int itemp=i;
@@ -45,7 +45,12 @@ public class Cuirasse extends Navire {
                             else{
                                 System.out.println("Deplacement impossible.");
                                 System.out.println("Veuillez choisir une nouvelle action.");
-                                //MenuDuJeu.menuDuTour();
+                                if (tourJoueur%2==0){
+                                        MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                                }
+                                if (tourJoueur%2==1){
+                                        MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                                }
                             }
                         break;
                     case 2:
@@ -56,17 +61,32 @@ public class Cuirasse extends Navire {
                             else{
                                 System.out.println("Deplacement impossible.");
                                 System.out.println("Veuillez choisir une nouvelle action.");
-                                //MenuDuJeu.menuDuTour();
+                                if (tourJoueur%2==0){
+                                        MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                                }
+                                if (tourJoueur%2==1){
+                                        MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                                }
                             }
                         break;
                     default:
                         System.out.println( "Entre 1 et 2 svp" );
-                        //MenuDuJeu.menuDuTour();
+                        if (tourJoueur%2==0){
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                        }
+                        if (tourJoueur%2==1){
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                        }
                     }
                 } 
             else{
                 System.out.println("Selection impossible.");
-                //MenuDuJeu.menuDuTour();
+                if (tourJoueur%2==0){
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                        }
+                if (tourJoueur%2==1){
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                        }
             }
         }
         //Vertical
@@ -88,7 +108,12 @@ public class Cuirasse extends Navire {
                             else{
                                 System.out.println("Deplacement impossible.");
                                 System.out.println("Veuillez choisir une nouvelle action.");
-                                //MenuDuJeu.menuDuTour();
+                                if (tourJoueur%2==0){
+                                        MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                                }
+                                if (tourJoueur%2==1){
+                                        MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                                }
                             }
                         break;
                     case 2: 
@@ -99,21 +124,42 @@ public class Cuirasse extends Navire {
                             else{
                                 System.out.println("Deplacement impossible.");
                                 System.out.println("Veuillez choisir une nouvelle action.");
-                                //MenuDuJeu.menuDuTour();
+                                if (tourJoueur%2==0){
+                                        MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                                }
+                                if (tourJoueur%2==1){
+                                        MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                                }
                             }
                         break;
                     default:
                         System.out.println( "Entre 1 et 4 svp" );
-                        //MenuDuJeu.menuDuTour();
+                        if (tourJoueur%2==0){
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                        }
+                        if (tourJoueur%2==1){
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                        }
                 }
             }
             else{
                 System.out.println("Selection impossible.");
-                //MenuDuJeu.menuDuTour();
+                if (tourJoueur%2==0){
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                        }
+                if (tourJoueur%2==1){
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                        }
             }
         }
         else{
             System.out.println("Selection impossible.");
+            if (tourJoueur%2==0){
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                        }
+            if (tourJoueur%2==1){
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                        }
             
         }
     }
@@ -124,13 +170,19 @@ public class Cuirasse extends Navire {
     }
 
     @Override
-    public void Deplacement(String cuirasse, String[][] Grille, int i, int j) {
+    public void Deplacement(String cuirasse, String[][] Grille, int i, int j, tourJoueur) {
         if (cuirasse.equals("**")){
-            choixSens(Grille, i, j);         
+            choixSens(Grille, i, j, tourJoueur);         
         }
         else{
             System.out.println("Le navire est touche. Il ne peut pas se deplacer.");
             System.out.println("Veuillez choisir une autre action.");
+            if (tourJoueur%2==0){
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                        }
+            if (tourJoueur%2==1){
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                        }
         }
     }    
 }

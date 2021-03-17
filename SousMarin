@@ -16,7 +16,7 @@ public class SousMarin extends Navire {
     Scanner sens = new Scanner(System.in);
     int choixSens = 0;
     
-    public static void choixSens(String[][] Grille, int i, int j) {
+    public static void choixSens(String[][] Grille, int i, int j , int tourJoueur) {
         int nombreChoix=0;
         System.out.println(" Selectionner 1, 2, 3 ou 4. \n 1: Deplacer vers le haut \n 2. Deplacer vers la droite \n 3. Deplacer vers le bas \n 4. Deplacer vers la gauche");
         nombreChoix = new Scanner(System.in).nextInt();
@@ -29,7 +29,12 @@ public class SousMarin extends Navire {
                     else{
                         System.out.println("Deplacement impossible.");
                         System.out.println("Veuillez choisir une nouvelle action.");
-                        choixSens(Grille, i, j);
+                        if (tourJoueur%2==0){
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                        }
+                        if (tourJoueur%2==1){
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                        }
                     }
                 break;
             case 2: 
@@ -40,7 +45,12 @@ public class SousMarin extends Navire {
                     else{
                         System.out.println("Deplacement impossible.");
                         System.out.println("Veuillez choisir une nouvelle action.");
-                        choixSens(Grille, i, j);
+                        if (tourJoueur%2==0){
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                        }
+                        if (tourJoueur%2==1){
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                        }
                     }
                 break;
             case 3:
@@ -51,7 +61,12 @@ public class SousMarin extends Navire {
                     else{
                         System.out.println("Deplacement impossible.");
                         System.out.println("Veuillez choisir une nouvelle action.");
-                        choixSens(Grille, i, j);
+                        if (tourJoueur%2==0){
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                        }
+                        if (tourJoueur%2==1){
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                        }
                     }
                 break;
             case 4:
@@ -62,12 +77,22 @@ public class SousMarin extends Navire {
                     else{
                         System.out.println("Deplacement impossible.");
                         System.out.println("Veuillez choisir une nouvelle action.");
-                        choixSens(Grille, i, j);
+                        if (tourJoueur%2==0){
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                        }
+                        if (tourJoueur%2==1){
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                        }
                     }
                 break;
             default:
                 System.out.println( "Entre 1 et 4 svp" );
-                choixSens(Grille, i, j);
+                if (tourJoueur%2==0){
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                        }
+                if (tourJoueur%2==1){
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                        }
         }
     }
     
@@ -77,14 +102,20 @@ public class SousMarin extends Navire {
     }
 
     @Override
-    public void Deplacement(String sousmarin, String[][] Grille, int i, int j) {
+    public void Deplacement(String sousmarin, String[][] Grille, int i, int j , int tourJoueur) {
         if (sousmarin.equals("SS")){
             System.out.println("Dans quel sens souhaitez-vous déplacer le sous-marin ?");
-            choixSens(Grille, i, j);         
+            choixSens(Grille, i, j , tourJoueur);         
         }
         else{
             System.out.println("Le navire est coule. Il ne peut pas se deplacer.");
             System.out.println("Veuillez choisir une autre action.");
+            if (tourJoueur%2==0){
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                        }
+            if (tourJoueur%2==1){
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                        }
         }
     }    
 }

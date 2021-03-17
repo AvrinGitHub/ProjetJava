@@ -54,7 +54,7 @@ import java.util.Scanner;
     }
     */
         
-    public void choixSens(String[][] Grille, int i, int j) {
+    public void choixSens(String[][] Grille, int i, int j , int tourJoueur) {
         int nombreChoix;
         int orientation;
         int itemp=i;
@@ -97,7 +97,12 @@ import java.util.Scanner;
                             else{
                                 System.out.println("Deplacement impossible.");
                                 System.out.println("Veuillez choisir une nouvelle action.");
-                                //MenuDuJeu.menuDuTour();;
+                                if (tourJoueur%2==0){
+                                        MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                                }
+                                if (tourJoueur%2==1){
+                                        MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                                }
                             }
                         break;
                     /*case 3:
@@ -121,17 +126,32 @@ import java.util.Scanner;
                             else{
                                 System.out.println("Deplacement impossible.");
                                 System.out.println("Veuillez choisir une nouvelle action.");
-                                //MenuDuJeu.menuDuTour();;
+                                if (tourJoueur%2==0){
+                                        MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                                }
+                                if (tourJoueur%2==1){
+                                        MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                                }
                             }
                         break;
                     default:
                         System.out.println( "Entre 1 et 2 svp" );
-                        //MenuDuJeu.menuDuTour();;
+                        if (tourJoueur%2==0){
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                        }
+                        if (tourJoueur%2==1){
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                        }
                     }
                 } 
             else{
                 System.out.println("Selection impossible.");
-                //MenuDuJeu.menuDuTour();
+                if (tourJoueur%2==0){
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                        }
+                if (tourJoueur%2==1){
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                        }
             }
         }
         //Vertical
@@ -153,7 +173,12 @@ import java.util.Scanner;
                             else{
                                 System.out.println("Deplacement impossible.");
                                 System.out.println("Veuillez choisir une nouvelle action.");
-                                //MenuDuJeu.menuDuTour();;
+                                if (tourJoueur%2==0){
+                                        MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                                }
+                                if (tourJoueur%2==1){
+                                        MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                                }
                             }
                         break;
                     /*case 2: 
@@ -177,7 +202,12 @@ import java.util.Scanner;
                             else{
                                 System.out.println("Deplacement impossible.");
                                 System.out.println("Veuillez choisir une nouvelle action.");
-                                //MenuDuJeu.menuDuTour();;
+                                if (tourJoueur%2==0){
+                                        MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                                }
+                                if (tourJoueur%2==1){
+                                        MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                                }
                             }
                         break;
                     /*case 4:
@@ -195,17 +225,32 @@ import java.util.Scanner;
                         break;*/
                     default:
                         System.out.println( "Entre 1 et 2 svp" );
-                        //MenuDuJeu.menuDuTour();;
+                        if (tourJoueur%2==0){
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                        }
+                        if (tourJoueur%2==1){
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                        }
                 }
             }
             else{
                 System.out.println("Selection impossible.");
-                //MenuDuJeu.menuDuTour();
+                if (tourJoueur%2==0){
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                        }
+                if (tourJoueur%2==1){
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                        }
             }
         }
         else{
             System.out.println("Selection impossible.");
-            //MenuDuJeu.menuDuTour();
+            if (tourJoueur%2==0){
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                        }
+            if (tourJoueur%2==1){
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                        }
             
         }
     }
@@ -216,14 +261,19 @@ import java.util.Scanner;
     }
 
     @Override
-    public void Deplacement(String croiseur, String[][] Grille, int i, int j) {
+    public void Deplacement(String croiseur, String[][] Grille, int i, int j , int tourJoueur) {
         if (croiseur.equals("oo")){
-            choixSens(Grille, i, j);         
+            choixSens(Grille, i, j , tourJoueur);         
         }
         else{
             System.out.println("Le navire est touche. Il ne peut pas se deplacer.");
             System.out.println("Veuillez choisir une autre action.");
-            //MenuDuJeu.menuDuTour();
+            if (tourJoueur%2==0){
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                        }
+            if (tourJoueur%2==1){
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                        }
         }
     }    
 

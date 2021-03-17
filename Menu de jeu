@@ -1,28 +1,35 @@
 package projetjava;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.* ; 
 
 public class MenuDuJeu {
-    public static void menu() {
+    public static void menu() throws IOException {
                         
         int nombreMenu;
 
+        String [][] tableAllie = Grille.creaGrille();
+        String[][] tableAllieTir = Grille.creaGrille();
+        String[][] tableIa = Grille.creaGrille();
+        String[][] tableIaTir = Grille.creaGrille();
+        
         System.out.println(" sélectionner 1, 2, 3 ou 4. \n 1: Jouer une partie \n 2. Charger une partie \n 3. Aide (doit expliquer clairement les règles du jeu et les touches du clavier à utiliser lors d’une partie) \n 4. Quitter");
         nombreMenu = new Scanner(System.in).nextInt();
         switch( nombreMenu ) {
             
             case 1: //lancer une partie 
-                placemement bateau ... menuDuTour...
+                //placemement bateau ... menuDuTour...
                 break;
             case 2: //charger une partie 
-               chargerUnePartie();
+               ChargementPartie.chargerUnePartie(tableAllie, tableAllieTir, tableIa, tableIaTir);
 
                 break;
             case 3: //afficher l'aide 
-                afficherRegles();
+                Aide.afficherRegles();
                 break;
             case 4: //quitter le jeu 
-                
+                System.out.println("Merci d'avoir joue.");
                 break;
             default:
                 System.out.println( "Entre 1 et 4 svp" );
@@ -31,10 +38,10 @@ public class MenuDuJeu {
         
     }
 
-    public static void menuDuTour(){
+    public static void menuDuTour(String [][] tableAllie, String[][] tableAllieTir, String[][] tableIa, String[][] tableIaTir) throws FileNotFoundException, IOException{
 
         int nombreAction;
-        System.out.println("Sélectionner 1, 2, ou 3. 1: Tirer \n 2: Déplacer un bateau qui n'a pas été touché \n 3: quitter et enregistrer la partie \n ")
+        System.out.println("Sélectionner 1, 2, ou 3. 1: Tirer \n 2: Déplacer un bateau qui n'a pas été touché \n 3: quitter et enregistrer la partie \n ");
         nombreAction = new Scanner(System.in).nextInt();
         
         switch( nombreAction ) {
@@ -43,15 +50,18 @@ public class MenuDuJeu {
 
                 break;
             case 2: //déplacer bateau
-                int i;
-                int j;
-                menuBateau();
+                int selectioni;
+                int selectionj;
+                
+                selectioni = new Scanner(System.in).nextInt();
+                selectionj = new Scanner(System.in).nextInt();
+                menuBateau(tableAllie, selectioni, selectionj);
                 break;
             case 3: //quitter et sauvegarder partie 
-                tabRec("tableAllie" , tableAllie);
-                tabRec("tableAllieTir" , tableAllieTir);
-                tabRec("tableIa" , tableIa);
-                tabRec("tableIaTir" , tableIaTir);
+                Sauvegarde.tabRec("tableAllie" , tableAllie);
+                Sauvegarde.tabRec("tableAllieTir" , tableAllieTir);
+                Sauvegarde.tabRec("tableIa" , tableIa);
+                Sauvegarde.tabRec("tableIaTir" , tableIaTir);
 
                 break;
            
@@ -61,31 +71,35 @@ public class MenuDuJeu {
         }
     }
 
-    public static void menuBateau(int i , int j){
+    public static void menuBateau(String[][] Grille, int i , int j) throws IOException{
 
         int nombreAction;
-        System.out.println("Sélectionner 1, 2, ou 3. 1: sousMarin \n 2: destroyer \n 3: croiseur 4: cuirasse \n ")
+        System.out.println("Sélectionner 1, 2, ou 3. 1: sousMarin \n 2: destroyer \n 3: croiseur 4: cuirasse \n ");
         nombreAction = new Scanner(System.in).nextInt();
         
         switch( nombreAction ) {
             
             case 1: //sousmarin
-
-                sousMarin.deplacement(sousMarin, Grille , i , j);
+                SousMarin sousmarin = new SousMarin();
+                String sousmarinstrg = Grille[i][j];
+                sousmarin.Deplacement(sousmarinstrg, Grille, i, j);
                 break;
 
             case 2: //destroyer
-
-                destroyer.deplacement( destroyer , Grille , i , j);
+                Destroyer destroyer = new Destroyer();
+                String destroyerstrg = Grille[i][j];
+                destroyer.Deplacement(destroyerstrg, Grille, i, j);
                 break;
             case 3: //croiseur  
-
-                croiseur.deplacement( croiseur , Grille , i , j);
+                Croiseur croiseur = new Croiseur();
+                String croiseurstrg = Grille[i][j];
+                croiseur.Deplacement(croiseurstrg, Grille, i, j);
                 break;
 
             case 4: //cuirasse
-            
-                cuirasse.deplacement(Grille , i , j );
+                Cuirasse cuirasse = new Cuirasse();
+                String cuirassestrg = Grille[i][j];
+                cuirasse.Deplacement(cuirassestrg, Grille, i, j);
                 break; 
            
             default:

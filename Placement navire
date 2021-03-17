@@ -35,8 +35,8 @@ public class PlacementBateau {
             if(estPresent(Grille,nbAleai,nbAleaj)==true){
                 //Placement du navire à l'horizontal
                 if(orientation==1){
-                    if(nbAleaj>=7){
-                        max = 6;
+                    if(nbAleaj>=9){
+                        max = 8;
                         nbAleaj = (int)(Math.random()* (max - min + 1) + min );
                     }
                     if(estPresent(Grille,nbAleai,nbAleaj+1)==true){
@@ -45,14 +45,10 @@ public class PlacementBateau {
                                 if(estPresent(Grille,nbAleai,nbAleaj+4)==true){
                                     if(estPresent(Grille,nbAleai,nbAleaj+5)==true){
                                         if(estPresent(Grille,nbAleai,nbAleaj+6)==true){
-                                            if(estPresent(Grille,nbAleai,nbAleaj+7)==true){
-                                                if(estPresent(Grille,nbAleai,nbAleaj+8)==true){
-                                                    for(int k=0;k<9;k++){
-                                                    Grille[nbAleai][nbAleaj+k]="**";                               
-                                                    }
-                                                    nbCuirasse--;
+                                            for(int k=0;k<7;k++){
+                                                Grille[nbAleai][nbAleaj+k]="**";                               
                                                 }
-                                            }
+                                            nbCuirasse--;    
                                         }
                                     }
                                     
@@ -64,8 +60,8 @@ public class PlacementBateau {
                 
                 //Placement du navire à la verticale
                 if(orientation==2){
-                    if(nbAleai>=7){
-                        max = 6;
+                    if(nbAleai>=9){
+                        max = 8;
                         nbAleai = (int)(Math.random()* (max - min + 1) + min );
                     }
                     if(estPresent(Grille,nbAleai+1,nbAleaj)==true){
@@ -74,14 +70,10 @@ public class PlacementBateau {
                                 if(estPresent(Grille,nbAleai+4,nbAleaj)==true){
                                     if(estPresent(Grille,nbAleai+5,nbAleaj)==true){
                                         if(estPresent(Grille,nbAleai+6,nbAleaj)==true){
-                                            if(estPresent(Grille,nbAleai+7,nbAleaj)==true){
-                                                if(estPresent(Grille,nbAleai+8,nbAleaj)==true){
-                                                    for(int k=0;k<9;k++){
-                                                        Grille[nbAleai+k][nbAleaj]="**";                               
-                                                    }
-                                                    nbCuirasse--;
+                                            for(int k=0;k<7;k++){
+                                                Grille[nbAleai+k][nbAleaj]="**";                               
                                                 }
-                                            }
+                                            nbCuirasse--;
                                         }
                                     }
                                 }

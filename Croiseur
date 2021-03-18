@@ -86,7 +86,12 @@ import java.util.Scanner;
                             else{
                                 System.out.println("Deplacement impossible.");
                                 System.out.println("Veuillez choisir une nouvelle action.");
-                                choixSens(Grille, i, j);
+                                if (tourJoueur%2==0){
+                                        MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa );
+                                }
+                                if (tourJoueur%2==1){
+                                        MenuDuJeu.menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa );
+                                }
                             }
                         break;*/
                     case 1: 
@@ -98,10 +103,10 @@ import java.util.Scanner;
                                 System.out.println("Deplacement impossible.");
                                 System.out.println("Veuillez choisir une nouvelle action.");
                                 if (tourJoueur%2==0){
-                                        MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                                        MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                                 }
                                 if (tourJoueur%2==1){
-                                        MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                                        MenuDuJeu.menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                                 }
                             }
                         break;
@@ -115,7 +120,12 @@ import java.util.Scanner;
                             else{
                                 System.out.println("Deplacement impossible.");
                                 System.out.println("Veuillez choisir une nouvelle action.");
-                                choixSens(Grille, i, j);
+                                if (tourJoueur%2==0){
+                                        MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                                }
+                                if (tourJoueur%2==1){
+                                        MenuDuJeu.menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                                }
                             }
                         break;*/
                     case 2:
@@ -127,30 +137,30 @@ import java.util.Scanner;
                                 System.out.println("Deplacement impossible.");
                                 System.out.println("Veuillez choisir une nouvelle action.");
                                 if (tourJoueur%2==0){
-                                        MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                                        MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                                 }
                                 if (tourJoueur%2==1){
-                                        MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                                        MenuDuJeu.menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                                 }
                             }
                         break;
                     default:
                         System.out.println( "Entre 1 et 2 svp" );
                         if (tourJoueur%2==0){
-                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                         }
                         if (tourJoueur%2==1){
-                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                            MenuDuJeu.menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                         }
                     }
                 } 
             else{
                 System.out.println("Selection impossible.");
                 if (tourJoueur%2==0){
-                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                         }
                 if (tourJoueur%2==1){
-                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                            MenuDuJeu.menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                         }
             }
         }
@@ -174,26 +184,14 @@ import java.util.Scanner;
                                 System.out.println("Deplacement impossible.");
                                 System.out.println("Veuillez choisir une nouvelle action.");
                                 if (tourJoueur%2==0){
-                                        MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                                        MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                                 }
                                 if (tourJoueur%2==1){
-                                        MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                                        MenuDuJeu.menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                                 }
                             }
                         break;
-                    /*case 2: 
-                        if(j!=14 && testCaseDroite(Grille, i, j)==5){
-                                for(int k=0; k<5; k++){
-                                    Grille[i+k][j+1]=Grille[i+k][j];
-                                    Grille[i+k][j]="  ";
-                                }
-                            }
-                            else{
-                                System.out.println("Deplacement impossible.");
-                                System.out.println("Veuillez choisir une nouvelle action.");
-                                choixSens(Grille, i, j);
-                            }
-                        break;*/
+            
                     case 2:
                         if(i+4!=14 && Grille[i+5][j].equals("  ")){
                                 Grille[i+5][j]="oo";
@@ -203,53 +201,41 @@ import java.util.Scanner;
                                 System.out.println("Deplacement impossible.");
                                 System.out.println("Veuillez choisir une nouvelle action.");
                                 if (tourJoueur%2==0){
-                                        MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                                        MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                                 }
                                 if (tourJoueur%2==1){
-                                        MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                                        MenuDuJeu.menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                                 }
                             }
                         break;
-                    /*case 4:
-                        if(j!=0 && testCaseGauche(Grille, i, j)==5){
-                                for(int k=0; k<5; k++){
-                                    Grille[i+k][j-1]=Grille[i+k][j];
-                                    Grille[i+k][j]="  ";
-                                }
-                            }
-                            else{
-                                System.out.println("Deplacement impossible.");
-                                System.out.println("Veuillez choisir une nouvelle action.");
-                                choixSens(Grille, i, j);
-                            }
-                        break;*/
+                    
                     default:
                         System.out.println( "Entre 1 et 2 svp" );
                         if (tourJoueur%2==0){
                             MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
                         }
                         if (tourJoueur%2==1){
-                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                            MenuDuJeu.menuDuTourIz(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
                         }
                 }
             }
             else{
                 System.out.println("Selection impossible.");
                 if (tourJoueur%2==0){
-                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                         }
                 if (tourJoueur%2==1){
-                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                            MenuDuJeu.menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                         }
             }
         }
         else{
             System.out.println("Selection impossible.");
             if (tourJoueur%2==0){
-                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                         }
             if (tourJoueur%2==1){
-                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                            MenuDuJeu.menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                         }
             
         }
@@ -272,7 +258,7 @@ import java.util.Scanner;
                             MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                         }
             if (tourJoueur%2==1){
-                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                            MenuDuJeu.menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                         }
         }
     }    

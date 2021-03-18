@@ -124,7 +124,7 @@ public class MenuDuJeu {
         }
     }
 
-    public static void menuDuTourIA(String [][] tableAllie, String[][] tableAllieTir, String[][] tableIa, String[][] tableIaTir , int tourJoueur , int[][] coordonneBateauAllie , int[][] coordonneBateauIa){
+    public static void menuDuTourIa(String [][] tableAllie, String[][] tableAllieTir, String[][] tableIa, String[][] tableIaTir , int tourJoueur , int[][] coordonneBateauAllie , int[][] coordonneBateauIa){
 
         int max=2;
         int min=1;

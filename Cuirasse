@@ -50,7 +50,7 @@ public class Cuirasse extends Navire {
             if ((test==true)&& (orientation==1)) {
                 
                 if (tourJoueur%2==0){
-                    System.out.println("Dans quel sens souhaitez-vous déplacer le destroyer ?");
+                    System.out.println("Dans quel sens souhaitez-vous déplacer le cuirasse ?");
                     System.out.println(" Selectionner 1 ou 2. \n 1: Deplacer vers la droite \n 2. Deplacer vers la gauche");
                     nombreChoix = new Scanner(System.in).nextInt();
                 }
@@ -119,7 +119,7 @@ public class Cuirasse extends Navire {
         //Vertical
             if ((test==true)&& (orientation==2)){
                 if (tourJoueur%2==0){
-                    System.out.println("Dans quel sens souhaitez-vous déplacer le destroyer ?");
+                    System.out.println("Dans quel sens souhaitez-vous déplacer le cuirasse ?");
                     System.out.println(" Selectionner 1 ou 2. \n 1: Deplacer vers le haut \n 2. Deplacer vers le bas \n");
                     nombreChoix = new Scanner(System.in).nextInt();
                 }
@@ -148,7 +148,7 @@ public class Cuirasse extends Navire {
                                     MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                                 }
                                 if (tourJoueur%2==1){
-                                        MenuDuJeu.menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                                    MenuDuJeu.menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                                 }
                             }
                         break;

@@ -153,14 +153,30 @@ public class MenuDuJeu {
         }
     }
 
-    public static void finDePartie(String[] listeBateauAlliee , String [] listeBateauIa){
+    public static void finDePartie(String[][] coordonneBateauAllie , String [][] coordonneBateauIa){ 
         
-        if (listeBateauAlliee== null){
-            System.out.println("vous avez perdu");
+        int compteurAllie = 0; 
+        int compteurIa = 0; 
+        for (int i=0 ; i<10 ; i++){
+            if (coordonneBateauAllie[i][4]==3 ){
+                compteurAllie++;
+            }
+            if (coordonneBateauIa[i][4]==3){
+                compteurIa++;
+            }
         }
-        if ( listeBateauIa== null){
-            System.out.println("vous avez gagné");
+
+        if (compteurAllie==10){
+            System.out.println("Vous avez perdu");
         }
-        
+        if (compteurIa==10){
+            System.out.println("Vous avez gagne");
+        }        
+    }
+
+    public static void (String [][] tableAllie, String[][] tableAllieTir, String[][] tableIa, String[][] tableIaTir , int[][] coordonneBateauAllie , int[][] coordonneBateauIa){
+        for (int i=0 ; i<10 ; i++){
+            if coordonneBateauAllie
+        }
     }
 }

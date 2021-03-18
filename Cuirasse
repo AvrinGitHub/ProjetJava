@@ -32,7 +32,7 @@ public class Cuirasse extends Navire {
         boolean test; 
         
         if (tourJoueur%2==0){
-            System.out.println("Dans quel sens est oriente le destroyer ?");
+            System.out.println("Dans quel sens est oriente le cuirasse ?");
             System.out.println("Horizontal : 1");
             System.out.println("Vertical : 2");
             orientation = new Scanner(System.in).nextInt();

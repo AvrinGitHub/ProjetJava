@@ -42,7 +42,7 @@ public class Cuirasse extends Navire {
             int max = 2;
             int min = 1;
             orientation = (int)(Math.random()* (max - min + min) + min);
-            test=detecterSiOk( i , j , orientation , 4 , ligneTab , coordonneBateauAllie);
+            test=detecterSiOk( i , j , orientation , 4 , ligneTab , coordonneBateauIa);
         }
         //Horizontal
         

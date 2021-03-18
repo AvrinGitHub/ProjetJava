@@ -258,7 +258,7 @@ import java.util.Scanner;
                 MenuDuJeu.menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
             }
         }
-    }    
+    }  
 
 }
 

@@ -13,7 +13,7 @@ public abstract class Navire {
     //Taille du navire
     int taille = 0;
     
-    public abstract void Tir(String navire);
+    public abstract void Tir(String[][] GrilleAdv, String[][] GrilleTir);
     
     public abstract void Deplacement(String [][] tableAllie, String[][] tableAllieTir, String[][] tableIa, String[][] tableIaTir , String navire, int i, int j, int tourJoueur , int[][] coordonneBateauAllie , int[][] coordonneBateauIa);
     

@@ -21,6 +21,7 @@ public class Destroyer extends Navire {
             }
         }
         return compteur;
+        ujz
     }
     
     public static int testCaseBas(String[][] Grille, int i, int j){

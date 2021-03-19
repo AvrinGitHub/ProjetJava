@@ -6,7 +6,6 @@ import java.util.* ;
 
 
 public class MenuDuJeu {
-    public class MenuDuJeu {
     
     public static void menu(int tourJoueur) throws IOException {
         tourJoueur=0;              

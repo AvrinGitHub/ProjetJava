@@ -166,8 +166,37 @@ public class SousMarin extends Navire{
     }
 
     @Override
-    public void Tir(String navire) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void Tir(String[][] GrilleAdv, String[][] GrilleTir) {
+        System.out.println("Selectionnez la case sur laquelle vous souhaitez tirer :");
+        Scanner choixCase = new Scanner(System.in);
+        int caseTiri, caseTirj;
+        System.out.print("Ligne : ");
+        caseTiri = choixCase.nextInt();
+        System.out.println("");
+        System.out.print("Colonne : ");
+        caseTirj = choixCase.nextInt();
+        System.out.println("");
+        if(caseTiri >= 0 && caseTiri < 15 && caseTirj >= 0 && caseTirj < 15){
+            if (GrilleAdv[caseTiri][caseTirj].equals("  ") || GrilleAdv[caseTiri][caseTirj].equals("XX")){
+                System.out.println("Le tir a echoue. Vous n'avez rien touche.");
+            }
+            else{
+                System.out.println("Touche !");
+                if(GrilleAdv[caseTiri][caseTirj].equals("SS")){
+                    System.out.println("Coule !");
+                }
+                GrilleTir[caseTiri][caseTirj]="XX";
+                GrilleAdv[caseTiri][caseTirj]="XX";
+            }
+        }
+        else{
+            if (tourJoueur%2==0){
+                MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+            }
+            if (tourJoueur%2==1){
+                MenuDuJeu.menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+            }
+        }
     }
 
     @Override

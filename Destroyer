@@ -198,8 +198,53 @@ public class Destroyer extends Navire {
     }
     
     @Override
-    public void Tir(String navire) {
-        
+    public void Tir(String[][] GrilleAdv, String[][] GrilleTir) {
+        int dejaTire = 1;
+            System.out.println("Selectionnez la case sur laquelle vous souhaitez tirer :");
+            Scanner choixCase = new Scanner(System.in);
+            int caseTiri, caseTirj;
+        if (dejaTire==1){
+            System.out.println("Selection possible : Carre delimite par les lignes a et l, et par les colonnes 0 et 11.");
+            System.out.print("Ligne : ");
+            caseTiri = choixCase.nextInt();
+            System.out.println("");
+            System.out.print("Colonne : ");
+            caseTirj = choixCase.nextInt();
+            System.out.println("");
+            if(caseTiri >= 0 && caseTiri < 15 && caseTirj >= 0 && caseTirj < 15){
+                System.out.println("Vous tirez une fusée éclairante.");
+                String[][] temp;
+                temp = new String[4][4];
+                for(int k=0; k<4; k++){
+                    for(int q=0; q<4; q++){
+                        temp[caseTiri+k][caseTirj+q]=GrilleTir[caseTiri+k][caseTirj+q];
+                        GrilleTir[caseTiri+k][caseTirj+q]=GrilleAdv[caseTiri+k][caseTirj+q];
+                    }
+                }
+                Grille.afficheGrille(GrilleTir);            
+                int millis = 2000;
+
+                try {
+                    Thread.sleep(millis);
+                } catch (InterruptedException ie) {
+                //On effectue une pause de 2 secondes
+            }
+            for(int k=0; k<4; k++){
+                    for(int q=0; q<4; q++){
+                        GrilleTir[caseTiri+k][caseTirj+q]=temp[caseTiri+k][caseTirj+q];
+                    }
+                }
+            Grille.afficheGrille(GrilleTir);
+            dejaTire--;
+            }
+        else{
+            if (tourJoueur%2==0){
+                MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                }
+            if (tourJoueur%2==1){
+                MenuDuJeu.menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                }
+            }
     }
 
     @Override

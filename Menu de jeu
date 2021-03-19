@@ -4,7 +4,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.* ; 
 
+
 public class MenuDuJeu {
+    public class MenuDuJeu {
+    
     public static void menu(int tourJoueur) throws IOException {
         tourJoueur=0;              
         int nombreMenu;
@@ -19,8 +22,8 @@ public class MenuDuJeu {
         switch( nombreMenu ) {
             
             case 1: //lancer une partie 
-                int[][] coordonneBateauAllie;
-                int[][] coordonneBateauIa; 
+                int[][] coordonneBateauAllie = null;
+                int[][] coordonneBateauIa = null; 
                 PlacementBateau.placement(tableAllie , coordonneBateauAllie);
                 PlacementBateau.placement(tableIa , coordonneBateauIa);
 
@@ -38,7 +41,7 @@ public class MenuDuJeu {
                 break;
             default:
                 System.out.println( "Entre 1 et 4 svp" );
-                menu();
+                menu(tourJoueur);
         }
         
     }
@@ -54,7 +57,7 @@ public class MenuDuJeu {
             case 1: //tirer
 
                 tourJoueur++;
-                MenuDuJeu.menuDuTourIA(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                MenuDuJeu.menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                 break;
             case 2: //déplacer bateau
                 int selectioni;
@@ -69,25 +72,25 @@ public class MenuDuJeu {
                 System.out.println( " " );
                 selectionj = new Scanner(System.in).nextInt();
 
-                menuBateau(tableAllie, selectioni, selectionj , tourJoueur);
+                menuBateau(tableAllie, tableAllieTir, tableIa, tableIaTir , selectioni, selectionj , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                 tourJoueur++;
-                MenuDuJeu.menuDuTourIA(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                 break;
             case 3: //quitter et sauvegarder partie et revenir au menu  
                 Sauvegarde.tabRec("tableAllie" , tableAllie);
                 Sauvegarde.tabRec("tableAllieTir" , tableAllieTir);
                 Sauvegarde.tabRec("tableIa" , tableIa);
                 Sauvegarde.tabRec("tableIaTir" , tableIaTir);
-                MenuDuJeu.menu();
+                menu(tourJoueur);
                 break;
            
             default:
                 System.out.println( "Entre 1 et 3 svp" );
-                menu();
+                menu(tourJoueur);
         }
     }
 
-    public static void menuBateau(String[][] Grille, int i , int j, int tourJoueur , int[][] coordonneBateauAllie , int[][] coordonneBateauIa) throws IOException{
+    public static void menuBateau(String [][] tableAllie, String[][] tableAllieTir, String[][] tableIa, String[][] tableIaTir , int i , int j, int tourJoueur , int[][] coordonneBateauAllie , int[][] coordonneBateauIa) throws IOException{
 
         int nombreAction;
         System.out.println("Sélectionner 1, 2, ou 3. 1: sousMarin \n 2: destroyer \n 3: croiseur 4: cuirasse \n ");
@@ -97,34 +100,59 @@ public class MenuDuJeu {
             
             case 1: //sousmarin
                 SousMarin sousmarin = new SousMarin();
-                String sousmarinstrg = Grille[i][j];
-                sousmarin.Deplacement(sousmarinstrg, Grille, i, j , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                if (tourJoueur%2==0){
+                    String sousmarinstrg = tableAllie[i][j];
+                    sousmarin.Deplacement(tableAllie, tableAllieTir, tableIa, tableIaTir , sousmarinstrg, i, j , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                }
+                if (tourJoueur%2==1){
+                    String sousmarinstrg = tableIa[i][j];
+                    sousmarin.Deplacement(tableAllie, tableAllieTir, tableIa, tableIaTir ,sousmarinstrg, i, j , tourJoueur , coordonneBateauAllie , coordonneBateauIa);   
+                }
                 break;
 
             case 2: //destroyer
                 Destroyer destroyer = new Destroyer();
-                String destroyerstrg = Grille[i][j];
-                destroyer.Deplacement(destroyerstrg, Grille, i, j , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                if (tourJoueur%2==0){
+                    String destroyerstrg = tableAllie[i][j];
+                    destroyer.Deplacement(tableAllie, tableAllieTir, tableIa, tableIaTir ,destroyerstrg, i, j , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                }
+                if (tourJoueur%2==1){
+                    String destroyerstrg = tableIa[i][j];
+                    destroyer.Deplacement(tableAllie, tableAllieTir, tableIa, tableIaTir ,destroyerstrg, i, j , tourJoueur , coordonneBateauAllie , coordonneBateauIa);    
+                }
                 break;
             case 3: //croiseur  
                 Croiseur croiseur = new Croiseur();
-                String croiseurstrg = Grille[i][j];
-                croiseur.Deplacement(croiseurstrg, Grille, i, j , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                if (tourJoueur%2==0){
+                    String croiseurstrg = tableAllie[i][j];
+                    croiseur.Deplacement(tableAllie, tableAllieTir, tableIa, tableIaTir ,croiseurstrg, i, j , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                }
+                if (tourJoueur%2==1){
+                    String croiseurstrg = tableIa[i][j];
+                    croiseur.Deplacement(tableAllie, tableAllieTir, tableIa, tableIaTir ,croiseurstrg, i, j , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                }
+                    
                 break;
 
             case 4: //cuirasse
                 Cuirasse cuirasse = new Cuirasse();
-                String cuirassestrg = Grille[i][j];
-                cuirasse.Deplacement(cuirassestrg, Grille, i, j , tourJoueur , coordonneBateauAllie, coordonneBateauIa);
+                if (tourJoueur%2==0){
+                    String cuirassestrg =tableAllie[i][j];
+                cuirasse.Deplacement(tableAllie, tableAllieTir, tableIa, tableIaTir ,cuirassestrg, i, j , tourJoueur , coordonneBateauAllie , coordonneBateauIa);    
+                }
+                if (tourJoueur%2==1){
+                String cuirassestrg = tableIa[i][j];
+                cuirasse.Deplacement(tableAllie, tableAllieTir, tableIa, tableIaTir ,cuirassestrg, i, j , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                }
                 break; 
            
             default:
                 System.out.println( "Entre 1 et 4 svp" );
-                menu();
+                menu(tourJoueur);
         }
     }
 
-    public static void menuDuTourIa(String [][] tableAllie, String[][] tableAllieTir, String[][] tableIa, String[][] tableIaTir , int tourJoueur , int[][] coordonneBateauAllie , int[][] coordonneBateauIa){
+    public static void menuDuTourIa(String [][] tableAllie, String[][] tableAllieTir, String[][] tableIa, String[][] tableIaTir , int tourJoueur , int[][] coordonneBateauAllie , int[][] coordonneBateauIa) throws IOException{
 
         int max=2;
         int min=1;
@@ -145,7 +173,7 @@ public class MenuDuJeu {
                 
                 int i = (int)(Math.random() * (maxi - mini));
                 int j = (int)(Math.random() * (maxi - mini));
-                menuBateau(tableIa , i , j , tourJoueur, coordonneBateauAllie , coordonneBateauIa);
+                menuBateau(tableAllie, tableAllieTir, tableIa, tableIaTir , i , j , tourJoueur, coordonneBateauAllie , coordonneBateauIa);
                 tourJoueur++;
                 MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                 break;
@@ -153,7 +181,7 @@ public class MenuDuJeu {
         }
     }
 
-    public static void finDePartie(String[][] coordonneBateauAllie , String [][] coordonneBateauIa){ 
+    public static void finDePartie(int[][] coordonneBateauAllie , int[][] coordonneBateauIa){ 
         
         int compteurAllie = 0; 
         int compteurIa = 0; 
@@ -172,11 +200,5 @@ public class MenuDuJeu {
         if (compteurIa==10){
             System.out.println("Vous avez gagne");
         }        
-    }
-
-    public static void (String [][] tableAllie, String[][] tableAllieTir, String[][] tableIa, String[][] tableIaTir , int[][] coordonneBateauAllie , int[][] coordonneBateauIa){
-        for (int i=0 ; i<10 ; i++){
-            if coordonneBateauAllie
-        }
     }
 }

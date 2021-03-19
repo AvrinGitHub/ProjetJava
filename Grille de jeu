@@ -9,7 +9,7 @@ package projetjava;
  *
  * @author Romain
  */
-public class Grille {
+public class Grille{
     
     public static void afficheGrille(String[][] Grille){
         
@@ -115,4 +115,5 @@ public class Grille {
         }
             return lettre;
     }
+    
 }

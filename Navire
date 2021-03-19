@@ -15,9 +15,10 @@ public abstract class Navire {
     
     public abstract void Tir(String navire);
     
-    public abstract void Deplacement(String navire, String[][] Grille, int i, int j);
+    public abstract void Deplacement(String [][] tableAllie, String[][] tableAllieTir, String[][] tableIa, String[][] tableIaTir , String navire, int i, int j, int tourJoueur , int[][] coordonneBateauAllie , int[][] coordonneBateauIa);
     
     public int getTaille(){
         return this.taille;
     }
+    
 }

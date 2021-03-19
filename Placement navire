@@ -18,7 +18,7 @@ public class PlacementBateau {
 
     public static void placement(String[][] Grille , int[][] coordonneBateau ){
         
-        coordonneBateau = new int[10][5] /* ligne , colonne , orientation, type de bateau , touche ou non */;
+        coordonneBateau = new int[10][5] /* ligne , colonne , orientation, type de bateau , touche ou non */; 
         int nbSMarin = 4;
         int nbDestroyer = 3;
         int nbCroiseur = 2;
@@ -238,4 +238,5 @@ public class PlacementBateau {
             }
         }
     }
+    
 }

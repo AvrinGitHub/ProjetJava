@@ -1,6 +1,9 @@
-public class Partie{
+import java.io.IOException;
 
-    public static void lancementPartie(){
-        MenuDuJeu.menu();
+public class Partie {
+    
+    public static void lancementPartie(int tourJoueur) throws IOException{
+        MenuDuJeu.menu(tourJoueur);
     }
+    
 }

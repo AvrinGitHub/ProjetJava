@@ -6,6 +6,10 @@
 package projetjava;
 
 import java.util.Scanner;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 /**
  *
@@ -23,13 +27,13 @@ public class Cuirasse extends Navire {
         return false;     
     }
 
-    public static void choixSens(String[][] Grille, int i, int j, int tourJoueur , int[][] coordonneBateauAllie , int[][] coordonneBateauIa) {
+    public static void choixSens(String [][] tableAllie, String[][] tableAllieTir, String[][] tableIa, String[][] tableIaTir, int i, int j, int tourJoueur , int[][] coordonneBateauAllie , int[][] coordonneBateauIa) throws IOException {
         int nombreChoix = 0;
         int orientation = 0;
         int itemp=i;
         int jtemp=j;
         int ligneTab = 0;
-        boolean test = false; 
+        boolean test= false; 
         
         if (tourJoueur%2==0){
             System.out.println("Dans quel sens est oriente le cuirasse ?");
@@ -61,16 +65,17 @@ public class Cuirasse extends Navire {
                 }
                 switch( nombreChoix ) {
                     case 1: 
-                        if(j+6!=14 && Grille[i][j+7].equals("  ")){
-                                Grille[i][j]="  ";
-                                Grille[i][j+7]="**";
-                                if (tourJoueur%2==0){
+                        
+                                if (tourJoueur%2==0 && j+6!=14 && tableAllie[i][j+7].equals("  ")){
+                                    tableAllie[i][j]="  ";
+                                    tableAllie[i][j+7]="**";
                                     coordonneBateauAllie[ligneTab][1]= j+1;              
                                 }
-                                if (tourJoueur%2==1){
+                                if (tourJoueur%2==1 && j+6!=14 && tableIa[i][j+7].equals("  ")){
+                                    tableIa[i][j]="  ";
+                                    tableIa[i][j+7]="**";
                                     coordonneBateauIa[ligneTab][1]= j+1;
                                 }
-                            }
                             else{
                                 if (tourJoueur%2==0){
                                     System.out.println("Deplacement impossible.");
@@ -83,16 +88,18 @@ public class Cuirasse extends Navire {
                             }
                         break;
                     case 2:
-                        if(j!=0 && Grille[i][j-1].equals("  ")){
-                                Grille[i][j-1]="**";
-                                Grille[i][j+6]="  ";
-                                if (tourJoueur%2==0){
+                       
+                                if (tourJoueur%2==0 && j!=0 && tableAllie[i][j-1].equals("  ")){
+                                    tableAllie[i][j-1]="**";
+                                    tableAllie[i][j+6]="  ";
                                     coordonneBateauAllie[ligneTab][1]= j-1;              
                                 }
-                                if (tourJoueur%2==1){
+                                if (tourJoueur%2==1 && j!=0 && tableIa[i][j-1].equals("  ")){
+                                    tableIa[i][j-1]="**";
+                                    tableIa[i][j+6]="  ";
                                     coordonneBateauIa[ligneTab][1]= j-1;
                                 }
-                            }
+                            
                             else{
                                 System.out.println("Deplacement impossible.");
                                 System.out.println("Veuillez choisir une nouvelle action.");
@@ -130,16 +137,18 @@ public class Cuirasse extends Navire {
                 }
                 switch( nombreChoix ) {
                     case 1: 
-                        if(i!=0 && Grille[i-1][j].equals("  ")){
-                                Grille[i-1][j]="**";
-                                Grille[i+6][j]="  ";
-                                if (tourJoueur%2==0){
+                        
+                                if (tourJoueur%2==0 && i!=0 && tableAllie[i-1][j].equals("  ")){
+                                    tableAllie[i-1][j]="**";
+                                    tableAllie[i+6][j]="  ";
                                     coordonneBateauAllie[ligneTab][0]= i-1;              
                                 }
-                                if (tourJoueur%2==1){
+                                if (tourJoueur%2==1 && i!=0 && tableIa[i-1][j].equals("  ")){
+                                    tableIa[i-1][j]="**";
+                                    tableIa[i+6][j]="  ";
                                     coordonneBateauIa[ligneTab][0]= i-1;
                                 }
-                            }
+                            
                             else{
                                 
                                 if (tourJoueur%2==0){
@@ -153,21 +162,23 @@ public class Cuirasse extends Navire {
                             }
                         break;
                     case 2: 
-                        if(i+6!=14 && Grille[i+7][j].equals("  ")){
-                                Grille[i+7][j]="**";
-                                Grille[i][j]="  ";
-                                if (tourJoueur%2==0){
+                        
+                                if (tourJoueur%2==0 && i+6!=14 && tableAllie[i+7][j].equals("  ")){
+                                    tableAllie[i+7][j]="**";
+                                    tableAllie[i][j]="  ";
                                     coordonneBateauAllie[ligneTab][0]= i+1;              
                                 }
-                                if (tourJoueur%2==1){
+                                if (tourJoueur%2==1 && i+6!=14 && tableIa[i+7][j].equals("  ")){
+                                    tableIa[i+7][j]="**";
+                                    tableIa[i][j]="  ";
                                     coordonneBateauIa[ligneTab][0]= i+1;
                                 }
-                            }
+                            
                         else{
                             if (tourJoueur%2==0){
                                 System.out.println("Deplacement impossible.");
                                 System.out.println("Veuillez choisir une nouvelle action.");
-                                MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur);
+                                MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                             }
                             if (tourJoueur%2==1){
                                 MenuDuJeu.menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
@@ -199,21 +210,34 @@ public class Cuirasse extends Navire {
     public void Tir(String navire) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
-    public void Deplacement(String cuirasse, String[][] Grille, int i, int j, tourJoueur , int[][] coordonneBateauAllie , int[][] coordonneBateauIa) {
+    public void Deplacement(String[][] tableAllie, String[][] tableAllieTir, String[][] tableIa, String[][] tableIaTir, String cuirasse, int i, int j, int tourJoueur, int[][] coordonneBateauAllie, int[][] coordonneBateauIa) {
         if (cuirasse.equals("**")){
-            choixSens(Grille, i, j, tourJoueur , coordonneBateauAllie , coordonneBateauIa);         
+            try {         
+                choixSens(tableAllie, tableAllieTir, tableIa, tableIaTir , i, j, tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+            } catch (IOException ex) {
+                Logger.getLogger(Cuirasse.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         else{
             if (tourJoueur%2==0){
                 System.out.println("Selection impossible");
                 System.out.println("Recommencez");
-                MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                try {
+                    MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                } catch (IOException ex) {
+                    Logger.getLogger(Cuirasse.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             if (tourJoueur%2==1){
-                MenuDuJeu.menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                try {
+                    MenuDuJeu.menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                } catch (IOException ex) {
+                    Logger.getLogger(Cuirasse.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
+        
         }
-    }    
+    } 
 }

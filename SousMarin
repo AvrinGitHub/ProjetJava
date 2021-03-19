@@ -28,7 +28,7 @@ public class SousMarin extends Navire {
     public static void choixSens(String[][] Grille, int i, int j , int tourJoueur , int[][] coordonneBateauAllie , int[][] coordonneBateauIa) {
         int nombreChoix=0;
         int ligneTab=0 ; 
-        boolean test; 
+        boolean test = false; 
 
         if (tourJoueur%2==0){
             System.out.println("Dans quel sens souhaitez-vous déplacer le sous-marin ?");
@@ -48,9 +48,10 @@ public class SousMarin extends Navire {
                         Grille[i-1][j]=Grille[i][j];
                         Grille[i][j]="  ";
                         if (tourJoueur%2==0){
-                            coordonneBateauAllie
+                            coordonneBateauAllie[ligneTab][0]= i-1; 
                         }
                         if (tourJoueur%2==1){
+                            coordonneBateauIa[ligneTab][0]= i-1;
 
                         }
                     }
@@ -69,6 +70,12 @@ public class SousMarin extends Navire {
                if(j!=14 && Grille[i][j+1].equals("  ")){
                         Grille[i][j+1]=Grille[i][j];
                         Grille[i][j]="  ";
+                        if (tourJoueur%2==0){
+                            coordonneBateauAllie[ligneTab][1]= j+1; 
+                        }
+                        if (tourJoueur%2==1){
+                            coordonneBateauIa[ligneTab][1]= j+1;
+                        }
                     }
                     else{
                         System.out.println("Deplacement impossible.");
@@ -85,6 +92,12 @@ public class SousMarin extends Navire {
                 if(i!=14 && Grille[i+1][j].equals("  ")){
                         Grille[i+1][j]=Grille[i][j];
                         Grille[i][j]="  ";
+                        if (tourJoueur%2==0){
+                            coordonneBateauAllie[ligneTab][0]= i+1; 
+                        }
+                        if (tourJoueur%2==1){
+                            coordonneBateauIa[ligneTab][0]= i+1;
+                        }
                     }
                     else{
                         System.out.println("Deplacement impossible.");
@@ -101,6 +114,12 @@ public class SousMarin extends Navire {
                 if(j!=0 && Grille[i][j-1].equals("  ")){
                         Grille[i][j-1]=Grille[i][j];
                         Grille[i][j]="  ";
+                        if (tourJoueur%2==0){
+                            coordonneBateauAllie[ligneTab][1]= j-1; 
+                        }
+                        if (tourJoueur%2==1){
+                            coordonneBateauIa[ligneTab][1]= j-1;
+                        }
                     }
                     else{
                         System.out.println("Deplacement impossible.");
@@ -114,22 +133,24 @@ public class SousMarin extends Navire {
                     }
                 break;
             default:
-                System.out.println( "Entre 1 et 4 svp" );
+                
                 if (tourJoueur%2==0){
-                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
-                        }
+                    System.out.println( "Entre 1 et 4 svp" );
+                    MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                }
                 if (tourJoueur%2==1){
-                            MenuDuJeu.menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
-                        }
+                    MenuDuJeu.menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                }
         }
     }
         else{
             if (tourJoueur%2==0){
-                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                System.out.println("Selection impossible");
+                MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                         }
-                if (tourJoueur%2==1){
-                            MenuDuJeu.menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
-                        }
+            if (tourJoueur%2==1){
+                MenuDuJeu.menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+            }
         }
     }
     

@@ -66,11 +66,11 @@ import java.util.Scanner;
     }
         
     public void choixSens(String[][] Grille, int i, int j , int tourJoueur, int[][] coordonneBateauAllie , int[][] coordonneBateauIa) {
-        int nombreChoix;
-        int orientation;
+        int nombreChoix = 0;
+        int orientation = 0
         int itemp=i;
         int jtemp=j;
-        boolean test; 
+        boolean test = false; 
         int ligneTab=0; 
         if (tourJoueur%2==0){
             System.out.println("Dans quel sens est oriente le croiseur ? 1 H 2 V");

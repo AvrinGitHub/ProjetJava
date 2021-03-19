@@ -65,12 +65,12 @@ public class Destroyer extends Navire {
     }
     
     public static void choixSens(String[][] Grille, int i, int j , int tourJoueur , int[][] coordonneBateauAllie , int[][] coordonneBateauIa) {
-        int nombreChoix;
-        int orientation;
+        int nombreChoix = 0;
+        int orientation = 0;
         int itemp=i;
         int jtemp=j;
         int ligneTab = 0;
-        boolean test;
+        boolean test = false;
         
         if (tourJoueur%2==0){
             System.out.println("Dans quel sens est oriente le destroyer ?");

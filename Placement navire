@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projetjava;
+package bataillenavaleprojet.Modele;
 
 /**
  *
- * @author Admin
+ * @author bastien
  */
 public class PlacementBateau {
     
@@ -18,7 +18,7 @@ public class PlacementBateau {
 
     public static void placement(String[][] Grille , int[][] coordonneBateau ){
         
-        coordonneBateau = new int[10][5] /* ligne , colonne , orientation, type de bateau , touche ou non */; 
+        //coordonneBateau = new int[10][5] /* ligne , colonne , orientation, type de bateau , touche ou non, dejaTire */; 
         int nbSMarin = 4;
         int nbDestroyer = 3;
         int nbCroiseur = 2;
@@ -39,7 +39,7 @@ public class PlacementBateau {
                     if(nbAleaj>=9){
                         max = 8;
                         nbAleaj = (int)(Math.random()* (max - min + 1) + min );
-                    }
+                    }//test sur les cases vides 
                     if(estPresent(Grille,nbAleai,nbAleaj+1)==true){
                         if(estPresent(Grille,nbAleai,nbAleaj+2)==true){
                             if(estPresent(Grille,nbAleai,nbAleaj+3)==true){
@@ -49,11 +49,13 @@ public class PlacementBateau {
                                             for(int k=0;k<7;k++){
                                                 Grille[nbAleai][nbAleaj+k]="**";                               
                                                 }
+                                            //remplissage de la liste pour savoir ou sont les bateaux
                                             coordonneBateau[i][0]= nbAleai;
                                             coordonneBateau[i][1]= nbAleaj;
                                             coordonneBateau[i][2]= orientation;
                                             coordonneBateau[i][3]= 4;
-                                            coordonneBateau[i][4]= 1;  
+                                            coordonneBateau[i][4]= 1;
+                                            coordonneBateau[i][5]=3;
                                             i++;  
                                             nbCuirasse--;   
                                         }
@@ -70,7 +72,7 @@ public class PlacementBateau {
                     if(nbAleai>=9){
                         max = 8;
                         nbAleai = (int)(Math.random()* (max - min + 1) + min );
-                    }
+                    }//test sur les cases vides 
                     if(estPresent(Grille,nbAleai+1,nbAleaj)==true){
                         if(estPresent(Grille,nbAleai+2,nbAleaj)==true){
                             if(estPresent(Grille,nbAleai+3,nbAleaj)==true){
@@ -80,11 +82,13 @@ public class PlacementBateau {
                                             for(int k=0;k<7;k++){
                                                 Grille[nbAleai+k][nbAleaj]="**";                               
                                                 }
+                                            //remplissage de la liste pour savoir ou sont les bateaux
                                             coordonneBateau[i][0]= nbAleai;
                                             coordonneBateau[i][1]= nbAleaj;
                                             coordonneBateau[i][2]= orientation;
                                             coordonneBateau[i][3]= 4 ;
-                                            coordonneBateau[i][4]= 1;   
+                                            coordonneBateau[i][4]= 1;
+                                            coordonneBateau[i][5]=3;
                                             i++;  
                                             nbCuirasse--;
                                         }
@@ -113,7 +117,7 @@ public class PlacementBateau {
                     if(nbAleaj>=11){
                         max = 10;
                         nbAleaj = (int)(Math.random()* (max - min + 1) + min );
-                    }
+                    }//test sur les cases vides
                     if(estPresent(Grille,nbAleai,nbAleaj+1)==true){
                         if(estPresent(Grille,nbAleai,nbAleaj+2)==true){
                             if(estPresent(Grille,nbAleai,nbAleaj+3)==true){
@@ -121,11 +125,13 @@ public class PlacementBateau {
                                     for(int k=0;k<5;k++){
                                         Grille[nbAleai][nbAleaj+k]="oo";                               
                                     }
+                                    //remplissage de la liste pour savoir ou sont les bateaux
                                     coordonneBateau[i][0]= nbAleai;
                                     coordonneBateau[i][1]= nbAleaj;
                                     coordonneBateau[i][2]= orientation;
                                     coordonneBateau[i][3]= 3;
-                                    coordonneBateau[i][4]= 1;  
+                                    coordonneBateau[i][4]= 1; 
+                                    coordonneBateau[i][5]=3;
                                     i++;  
                                     nbCroiseur--;
                                 }
@@ -138,7 +144,7 @@ public class PlacementBateau {
                     if(nbAleai>=11){
                         max = 10;
                         nbAleai = (int)(Math.random()* (max - min + 1) + min );
-                    }
+                    }//test sur les cases vides 
                     if(estPresent(Grille,nbAleai+1,nbAleaj)==true){
                         if(estPresent(Grille,nbAleai+2,nbAleaj)==true){
                             if(estPresent(Grille,nbAleai+3,nbAleaj)==true){
@@ -146,11 +152,13 @@ public class PlacementBateau {
                                     for(int k=0;k<5;k++){
                                         Grille[nbAleai+k][nbAleaj]="oo";                               
                                     }
+                                    //remplissage de la liste pour savoir ou sont les bateaux
                                     coordonneBateau[i][0]= nbAleai;
                                     coordonneBateau[i][1]= nbAleaj;
                                     coordonneBateau[i][2]= orientation;
                                     coordonneBateau[i][3]= 3 ;
-                                    coordonneBateau[i][4]= 1;   
+                                    coordonneBateau[i][4]= 1;
+                                    coordonneBateau[i][5]=3;
                                     i++;  
                                     nbCroiseur--;
                                 }
@@ -177,17 +185,19 @@ public class PlacementBateau {
                     if(nbAleaj>=13){
                         max = 12;
                         nbAleaj = (int)(Math.random()* (max - min + 1) + min );
-                    }
+                    }//test sur les cases vides 
                     if(estPresent(Grille,nbAleai,nbAleaj+1)==true){
                         if(estPresent(Grille,nbAleai,nbAleaj+2)==true){
                             for(int k=0;k<3;k++){
                                 Grille[nbAleai][nbAleaj+k]="++";
                             }
+                            //remplissage de la liste pour savoir ou sont les bateaux
                             coordonneBateau[i][0]= nbAleai;
                             coordonneBateau[i][1]= nbAleaj;
                             coordonneBateau[i][2]= orientation;
                             coordonneBateau[i][3]= 2;
-                            coordonneBateau[i][4]= 1;    
+                            coordonneBateau[i][4]= 1;
+                            coordonneBateau[i][5]=3;
                             i++;  
                             nbDestroyer--;
                         }
@@ -198,17 +208,19 @@ public class PlacementBateau {
                     if(nbAleai>=13){
                         max = 12;
                         nbAleai = (int)(Math.random()* (max - min + 1) + min );
-                    }
+                    }//test sur les cases vides 
                     if(estPresent(Grille,nbAleai+1,nbAleaj)==true){
                         if(estPresent(Grille,nbAleai+2,nbAleaj)==true){
                             for(int k=0;k<3;k++){
                                 Grille[nbAleai+k][nbAleaj]="++";                               
                             }
+                            //remplissage de la liste pour savoir ou sont les bateaux
                             coordonneBateau[i][0]= nbAleai;
                             coordonneBateau[i][1]= nbAleaj;
                             coordonneBateau[i][2]= orientation;
                             coordonneBateau[i][3]= 2;
-                            coordonneBateau[i][4]= 1;    
+                            coordonneBateau[i][4]= 1;
+                            coordonneBateau[i][5]=3;
                             i++; 
                             nbDestroyer--;
                             
@@ -225,18 +237,113 @@ public class PlacementBateau {
             //Génération des coordonnées aléatoires
             int nbAleai = (int)(Math.random()* (max - min + 1) + min );
             int nbAleaj = (int)(Math.random()* (max - min + 1) + min );
-            
+            //test case vide
             if(estPresent(Grille,nbAleai,nbAleaj)==true){
                 Grille[nbAleai][nbAleaj]="SS";
+                //remplissage de la liste pour savoir ou sont les bateaux
                 coordonneBateau[i][0]= nbAleai;
                 coordonneBateau[i][1]= nbAleaj;
                 coordonneBateau[i][2]= 1;
                 coordonneBateau[i][3]= 1;
-                coordonneBateau[i][4]= 1;    
+                coordonneBateau[i][4]= 1;
+                coordonneBateau[i][5]=3;
                 i++; 
                 nbSMarin--;
             }
         }
     }
     
+//modifie la coordonne qui nous permet de savoir si le navire est touche ou coule 
+public static void TestCoule(String[][] table,int[][] coordonneBateau){
+        int i=0;
+        int j=0;
+        int compteur=0 ; 
+    for (int z=0 ; z<10 ; z++){
+        if(coordonneBateau[z][3]==1){//ssmarin
+            if (table[coordonneBateau[z][0]][coordonneBateau[z][1]].equals("XX")){
+                coordonneBateau[z][4]=3;
+            }
+        }
+        else if(coordonneBateau[z][3]==2){//destroyer
+            i=coordonneBateau[z][0];
+            j=coordonneBateau[z][1];
+            if (coordonneBateau[z][2]==1){
+                for(int k=j ; k<j+3 ; k++){
+                    if (table[i][k].equals("XX")){
+                        compteur++;
+                    }
+                }
+            }
+            else if (coordonneBateau[z][2]==2){
+                for(int k=i ; k<i+3 ; k++){
+                    if (table[k][j].equals("XX")){
+                        compteur++;
+                    }
+                }
+                
+            }
+            if (compteur>1){
+                coordonneBateau[z][4]=2;
+            }
+            else if (compteur==3){
+                coordonneBateau[z][4]=3;
+            }
+            
+               
+        }
+        else if(coordonneBateau[z][3]==3){//croiseur
+            i=coordonneBateau[z][0];
+            j=coordonneBateau[z][1];
+            if (coordonneBateau[z][2]==1){
+                for(int k=j ; k<j+5 ; k++){
+                    if (table[i][k].equals("XX")){
+                        compteur++;
+                    }
+                }
+            }
+            else if (coordonneBateau[z][2]==2){
+                for(int k=i ; k<i+5 ; k++){
+                    if (table[k][j].equals("XX")){
+                        compteur++;
+                    }
+                }
+                
+            }
+            if (compteur>1){
+                coordonneBateau[z][4]=2;
+            }
+            else if (compteur==5){
+                coordonneBateau[z][4]=3;
+            }
+            
+        }
+        else if(coordonneBateau[z][3]==4){//cuirasse
+            i=coordonneBateau[z][0];
+            j=coordonneBateau[z][1];
+            if (coordonneBateau[z][2]==1){
+                for(int k=j ; k<j+7 ; k++){
+                    if (table[i][k].equals("XX")){
+                        compteur++;
+                    }
+                }
+            }
+            else if (coordonneBateau[z][2]==2){
+                for(int k=i ; k<i+7 ; k++){
+                    if (table[k][j].equals("XX")){
+                        compteur++;
+                    }
+                }
+                
+            }
+            if (compteur>1){
+                coordonneBateau[z][4]=2;
+            }
+            else if (compteur==3){
+                coordonneBateau[z][4]=3;
+            }
+            
+        }
+    }
+}
+
 }

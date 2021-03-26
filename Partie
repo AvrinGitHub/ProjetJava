@@ -1,9 +1,42 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package bataillenavaleprojet.Controleur;
+
+import bataillenavaleprojet.Controleur.MenuDuJeu;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class Partie {
-    
-    public static void lancementPartie(int tourJoueur) throws IOException{
+/**
+ *
+ * @author bastien
+ */
+public class Partie { 
+    //renvoie vers le menu
+    public static void lancementPartie(int tourJoueur ,int SortieDeJeu) throws IOException, EntierNegatifException, FileNotFoundException, EntierTropGrand{
         MenuDuJeu.menu(tourJoueur);
+    }
+    
+    public static void ChoixTourJoueur( String [][] tableAllie, String[][] tableAllieTir, String[][] tableIa, String[][] tableIaTir, int tourJoueur, int[][] coordonneBateauAllie , int[][] coordonneBateauIa) throws IOException, FileNotFoundException, EntierNegatifException, EntierTropGrand{
+        
+        //si tourJoueur pair alors c'est l'utilisateur qui joue
+        //si tourJoueur impair alors c'est l'ordi qui joue 
+        
+        while(tourJoueur<200){
+            
+            if (tourJoueur%2==0){
+                MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir, tourJoueur, coordonneBateauAllie, coordonneBateauIa);
+                
+                tourJoueur++;
+               
+            }
+            else if (tourJoueur%2==1){
+                MenuDuJeu.menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir, tourJoueur, coordonneBateauAllie, coordonneBateauIa);
+                tourJoueur++;
+            }   
+    }
     }
     
 }

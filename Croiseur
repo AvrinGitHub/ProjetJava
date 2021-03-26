@@ -3,19 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projetjava;
+package bataillenavaleprojet.Controleur;
 
-import java.util.Scanner;
+
+import bataillenavaleprojet.Modele.Grille;
+import bataillenavaleprojet.Modele.Navire;
+import bataillenavaleprojet.Modele.PlacementBateau;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 /**
  *
- * @author Admin
+ * @author bastien
  */
-    public class Croiseur extends Navire {
-
+public class Croiseur extends Navire {
+// fonction pour verifier si la case donnee par l'utilisateur correspond bien a une case possible du bateau
     public static boolean detecterSiOk(int i, int j , int orientation , int typeBateau , int ligneTab , int[][] coordonnee){// ligneTab pour savoir quelle ligne modifier dans coordonnee apres 
         
         for (int z=0 ; z<10 ; z++ ){
@@ -27,157 +31,235 @@ import java.util.logging.Logger;
         return false;     
     }
         
-    public void choixSens(String [][] tableAllie, String[][] tableAllieTir, String[][] tableIa, String[][] tableIaTir, int i, int j , int tourJoueur, int[][] coordonneBateauAllie , int[][] coordonneBateauIa) throws IOException {
+    public void choixSens(String [][] tableAllie, String[][] tableAllieTir, String[][] tableIa, String[][] tableIaTir, int i, int j , int tourJoueur, int[][] coordonneBateauAllie , int[][] coordonneBateauIa) throws IOException, FileNotFoundException, EntierNegatifException, EntierTropGrand {
+        //variables 
         int nombreChoix = 0;
         int orientation = 0;
         int itemp=i;
         int jtemp=j;
         boolean test = false; 
         int ligneTab=0; 
+        //demande sur l'orientation du croiseur 
         if (tourJoueur%2==0){
+            //demande sur le deplacement 
             System.out.println("Dans quel sens est oriente le croiseur ? 1 H 2 V");
-            orientation = new Scanner(System.in).nextInt();
-            test=detecterSiOk( i , j , orientation , 3 , ligneTab , coordonneBateauAllie);
+            try{    
+                String entree = new Scanner(System.in).nextLine();
+                orientation = Integer.parseInt(entree);
+                if (orientation<1){
+                    throw new EntierNegatifException();//exception sur les entiers negatifs 
+                }
+                else if(orientation>2){
+                    throw new EntierTropGrand();
+                }
+                
+            }
+            
+            catch (NumberFormatException e){
+                System.out.println("pas de caractere . 1 ou 2!!");
+                MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir, tourJoueur, coordonneBateauAllie, coordonneBateauIa);
+            }   
+            catch (EntierNegatifException e2){
+                System.out.println("1 ou 2!!");
+                MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir, tourJoueur, coordonneBateauAllie, coordonneBateauIa);
+            }  
+            catch (EntierTropGrand e3){
+                System.out.println("Entier trop grand. 1 ou 2!!");
+                MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir, tourJoueur, coordonneBateauAllie, coordonneBateauIa);
+            }
+            test=detecterSiOk( i , j , orientation , 3 , ligneTab , coordonneBateauAllie);//on definit pour le detecterSiOk
         }
-        if (tourJoueur%2==1){
+        else if (tourJoueur%2==1){
             int max = 2;
             int min = 1;
-            orientation = (int)(Math.random()* (max - min + min) + min);
-            test=detecterSiOk( i , j , orientation , 3 , ligneTab , coordonneBateauIa);
+            orientation = (int)(Math.random()* (max - min + min) + min);//creation d'un entier entre 1 et 2 pour l'ordi
+            test=detecterSiOk( i , j , orientation , 3 , ligneTab , coordonneBateauIa);//on definit pour le detecterSiOk
         }
         
         
         //Horizontal
-            if((test==true)&&(orientation==1)){
+            if((test==true)&&(orientation==1)){//on verifie via detecterSiOk que la case peut etre utilisee
                 if (tourJoueur%2==0){
                     System.out.println("Dans quel sens souhaitez-vous déplacer le croiseur ?");
-                    System.out.println(" Selectionner 1 ou 2. \n 1: Deplacer vers la droite \n 2. Deplacer vers la gauche\n ");
-                    nombreChoix = new Scanner(System.in).nextInt();
+                    System.out.println(" Selectionner 1 ou 2. \n 1: Deplacer vers la droite \n 2. Deplacer vers la gauche\n 3. retour au menu");
+                    try{
+                        String entree = new Scanner(System.in).nextLine();
+                        nombreChoix = Integer.parseInt(entree);
+                        if (nombreChoix<0){
+                            throw new EntierNegatifException();
+                        }
+                    }
+            
+                    catch (NumberFormatException e){
+                        System.out.println("Veuillez saisir un entier.");
+                    }   
+                    catch (EntierNegatifException e2){
+                        System.out.println("Veuillez saisir un entier positif.");
+                    }
                 }
-                if (tourJoueur%2==1){
+                else if (tourJoueur%2==1){
                     int max = 2;
                     int min = 1;
                     nombreChoix = (int)(Math.random()* (max - min + min) + min);
                 }
-                
+                //menu sur le mouvement du croiseur qui en cas d'erreur renvoie au menu du tour 
                 switch( nombreChoix ) {
 
-                    case 1: 
-                        if (tourJoueur%2==0 && j+4!=14 && tableAllie[i][j+5].equals("  ")){
-                            tableAllie[i][j]="  ";
+                    case 1://deplacement a droite 
+                        
+                        if (tourJoueur%2==0 && j+4!=14 && tableAllie[i][j+5].equals("  ")){//si le mouvement est possible pour le joueur 
+                            tableAllie[i][j]="  ";//on deplace le bateau
                             tableAllie[i][j+5]="oo";
-                            coordonneBateauAllie[ligneTab][1]= j+1;              
+                            coordonneBateauAllie[ligneTab][1]= j+1;//on modifie le tableau de l'emplacement des bateaux
+                            Grille.afficheGrille(tableAllie);//on affiche la grille après le mouvement 
+                            
                         }
-                        if (tourJoueur%2==1 && j+4!=14 && tableIa[i][j+5].equals("  ")){
-                            tableIa[i][j]="  ";
+                        else if (tourJoueur%2==1 && j+4!=14 && tableIa[i][j+5].equals("  ")){// pour l'ordi 
+                            tableIa[i][j]="  ";//on deplace le bateau
                             tableIa[i][j+5]="oo";
-                            coordonneBateauIa[ligneTab][1]= j+1;
+                            coordonneBateauIa[ligneTab][1]= j+1;//on modifie le tableau de l'emplacement des bateaux
+                            
                         }
-                        else{
+                        else{//si impossible retour au menu du tour suivant si c'est le joueur ou l'ordi 
                             if (tourJoueur%2==0){
                                 System.out.println("Deplacement impossible.");
                                 System.out.println("Veuillez choisir une nouvelle action.");
                                 MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                             }
-                            if (tourJoueur%2==1){
+                            else if (tourJoueur%2==1){
                                 MenuDuJeu.menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                             }
                         }
                         break;
                     
-                    case 2:
-                        if (tourJoueur%2==0 && j!=0 && tableAllie[i][j-1].equals("  ")){
-                            tableAllie[i][j-1]="oo";
+                    case 2:// deplacement a gauche 
+                        
+                        if (tourJoueur%2==0 && j!=0 && tableAllie[i][j-1].equals("  ")){//si le mouvement est possible pour le joueur
+                            tableAllie[i][j-1]="oo";//on deplace le bateau
                             tableAllie[i][j+4]="  ";
-                            coordonneBateauAllie[ligneTab][1]= j-1;              
+                            coordonneBateauAllie[ligneTab][1]= j-1;//on modifie le tableau de l'emplacement des bateaux du joueur 
+                            Grille.afficheGrille(tableAllie);// on affiche la grille après le deplacement
+                            
                         }
-                        if (tourJoueur%2==1 && j!=0 && tableIa[i][j-1].equals("  ")){
-                            tableIa[i][j-1]="oo";
+                        else if (tourJoueur%2==1 && j!=0 && tableIa[i][j-1].equals("  ")){//pour l'ordi
+                            tableIa[i][j-1]="oo";//on deplace le bateau
                             tableIa[i][j+4]="  ";
-                            coordonneBateauIa[ligneTab][1]= j-1;
+                            coordonneBateauIa[ligneTab][1]= j-1;// on modifie le tableau de l'emplacement des bateaux de l'ia
+                            
                         }
-                        else{
+                        else{//si impossible retour au menu du tour suivant si c'est le joueur ou l'ordi 
                             if (tourJoueur%2==0){
                                 System.out.println("Deplacement impossible.");
                                 System.out.println("Veuillez choisir une nouvelle action.");
                                 MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                             }
-                            if (tourJoueur%2==1){
+                            else if (tourJoueur%2==1){
                                 MenuDuJeu.menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                             }
                         }
                         break;
+                        
+                    case 3://possibilité de revenir au menu 
+                        MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                        break;
                     default:
                         if (tourJoueur%2==0){
-                            System.out.println( "Entre 1 et 2 svp" );
+                            System.out.println( "Entre 1 et 3 svp" );
                             MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                         }
-                        if (tourJoueur%2==1){
+                        else if (tourJoueur%2==1){
                             MenuDuJeu.menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                         }
                     }
+            }
                 
         
         //Vertical
-            if( test==true && orientation==2){
-                if (tourJoueur%2==0){
+        else if( test==true && orientation==2){
+            //demande sur le deplacement     
+            if (tourJoueur%2==0){
                     System.out.println("Dans quel sens souhaitez-vous déplacer le destroyer ?");
-                    System.out.println(" Selectionner 1 ou 2. \n 1: Deplacer vers le haut \n 2. Deplacer vers le bas \n");
-                    nombreChoix = new Scanner(System.in).nextInt();
+                    System.out.println(" Selectionner 1 ou 2. \n 1: Deplacer vers le haut \n 2. Deplacer vers le bas \n 3. Retour au menu\n");
+                    try{
+            
+            String entree = new Scanner(System.in).nextLine();
+            nombreChoix = Integer.parseInt(entree);
+            if (nombreChoix<0){
+                throw new EntierNegatifException();
+        
+            }
+        }
+            
+        catch (NumberFormatException e){
+            System.out.println("Veuillez saisir un entier.");
+        }   
+        catch (EntierNegatifException e2){
+            System.out.println("Veuillez saisir un entier positif.");
+        }
                 }
-                if (tourJoueur%2==1){
-                    int max = 2;
-                    int min = 1;
-                    nombreChoix = (int)(Math.random()* (max - min + min) + min);
-                }
+            else if (tourJoueur%2==1){
+                int max = 2;
+                int min = 1;
+                nombreChoix = (int)(Math.random()* (max - min + min) + min);//aleatoire entre 1 et 2 pour l'ordi
+            }
                 
                 switch( nombreChoix ) {
-                    case 1: 
-                        if (tourJoueur%2==0 && i!=0 && tableAllie[i-1][j].equals("  ")){
-                            tableAllie[i-1][j]="oo";
+                    case 1: //deplacement vers le haut 
+                        if (tourJoueur%2==0 && i!=0 && tableAllie[i-1][j].equals("  ")){//test deplacement possible pour le joueur 
+                            tableAllie[i-1][j]="oo";//deplacement bateau
                             tableAllie[i+4][j]="  ";
-                            coordonneBateauAllie[ligneTab][0]= i-1;              
+                            coordonneBateauAllie[ligneTab][0]= i-1;//modif coordonne bateau joueur 
+                            Grille.afficheGrille(tableAllie);//affiche grille apres modif 
+                            
                         }
-                        if (tourJoueur%2==1 && i!=0 && tableIa[i-1][j].equals("  ")){
-                            tableIa[i-1][j]="oo";
+                        else if (tourJoueur%2==1 && i!=0 && tableIa[i-1][j].equals("  ")){//test deplacement pour l'ordi
+                            tableIa[i-1][j]="oo";//deplacement bateau
                             tableIa[i+4][j]="  ";
-                            coordonneBateauIa[ligneTab][0]= i-1;
+                            coordonneBateauIa[ligneTab][0]= i-1;//modif coordonne bateau Ia 
+                            
                         }
                             
-                        else{
-                            if (tourJoueur%2==0){
+                        else{//si erreur ou pas possible retour au menu 
+                            if (tourJoueur%2==0){//joueur
                                 System.out.println("Deplacement impossible.");
                                 System.out.println("Veuillez choisir une nouvelle action.");
                                 MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                             }
-                            if (tourJoueur%2==1){
+                            else if (tourJoueur%2==1){//ordi
                                 MenuDuJeu.menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                             }
                         }
                         break;
             
-                    case 2:                           
-                        if (tourJoueur%2==0 && i+4!=14 && tableAllie[i+5][j].equals("  ")){
-                            tableAllie[i+5][j]="oo";
+                    case 2://deplacement vers le bas                           
+                        if (tourJoueur%2==0 && i+4!=14 && tableAllie[i+5][j].equals("  ")){//test si mouvement possible pour le joueur
+                            tableAllie[i+5][j]="oo";//deplacement bateau
                             tableAllie[i][j]="  ";
-                            coordonneBateauAllie[ligneTab][0]= i+1;              
+                            coordonneBateauAllie[ligneTab][0]= i+1;//modif coordonne bateau joueur 
+                            Grille.afficheGrille(tableAllie);//affiche grille apres deplacement 
+                            
                         }
-                        if (tourJoueur%2==1 && i+4!=14 && tableIa[i+5][j].equals("  ")){
-                            tableIa[i+5][j]="oo";
+                        else if (tourJoueur%2==1 && i+4!=14 && tableIa[i+5][j].equals("  ")){//test si mouvement possible pour l'ordi 
+                            tableIa[i+5][j]="oo";//deplacement bateau
                             tableIa[i][j]="  ";
-                            coordonneBateauIa[ligneTab][0]= i+1;
+                            coordonneBateauIa[ligneTab][0]= i+1;//modif coordonne bateau Ia
+                            
                         }
                             
                         else{
-                            if (tourJoueur%2==0){
+                            if (tourJoueur%2==0){//retour menu si impossible 
                                 System.out.println("Deplacement impossible.");
                                 System.out.println("Veuillez choisir une nouvelle action.");
                                 MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                             }
-                            if (tourJoueur%2==1){
+                            else if (tourJoueur%2==1){
                                 MenuDuJeu.menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                             }
                         }
+                        break;
+                        
+                    case 3://possibilite de retour au menu
+                        MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                         break;
                     
                     default:
@@ -185,7 +267,7 @@ import java.util.logging.Logger;
                             System.out.println( "Entre 1 et 2 svp" );
                             MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                         }
-                        if (tourJoueur%2==1){
+                        else if (tourJoueur%2==1){
                             MenuDuJeu.menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                         }
                 }
@@ -195,64 +277,191 @@ import java.util.logging.Logger;
                     System.out.println("Selection impossible.");
                     MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                 }
-                if (tourJoueur%2==1){
+                else if (tourJoueur%2==1){
                     MenuDuJeu.menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                 }
             
             }
     }
 
-    
-    }
-
     @Override
-    public void Tir(String[][] GrilleAdv, String[][] GrilleTir) {
-        Scanner choixCase = new Scanner(System.in);
-        int caseTiri, caseTirj;
-        System.out.println("Selectionnez la case sur laquelle vous souhaitez tirer :");
-        System.out.print("Ligne : ");
-        caseTiri = choixCase.nextInt();
-        System.out.println("");
-        System.out.print("Colonne : ");
-        caseTirj = choixCase.nextInt();
-        System.out.println(""); 
-        if(caseTiri>=0 && caseTiri<15 && caseTirj>=0 && caseTirj<15){
-            if(GrilleAdv[caseTiri][caseTirj].equals("  ") || GrilleAdv[caseTiri][caseTirj].equals("SS")){
-                System.out.println("Le tir a echoue. Vous n'avez rien touche.");
+    public void Tir(String[][] tableAllie, String[][] tableAllieTir, String[][] tableIa, String[][] tableIaTir, int tourJoueur, int[][] coordonneBateauAllie, int[][] coordonneBateauIa) {
+        //variables
+        int caseTiri=0,caseTirj=0;
+       
+        if (tourJoueur%2==0){//tir pour le joueur
+            System.out.println("Selectionnez la case sur laquelle vous souhaitez tirer :(pas sur dernieres colonnes ou lignes)");
+            
+            System.out.print("Ligne : ");//selection ligne avec blindage 
+            try{
+            
+            String entree = new Scanner(System.in).nextLine();
+            caseTiri = Integer.parseInt(entree);
+            if (caseTiri<0){
+                throw new EntierNegatifException();
+        
             }
-            else{
+            else if(caseTiri>14){
+                throw new EntierTropGrand();
+            }
+        }
+            
+        catch (NumberFormatException e){//si saisie d'un ou plusieurs caracteres 
+            System.out.println("Veuillez saisir un entier.");
+                try {
+                    MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir, tourJoueur, coordonneBateauAllie, coordonneBateauIa);
+                } catch (IOException | EntierNegatifException | EntierTropGrand ex) {
+                    Logger.getLogger(Croiseur.class.getName()).log(Level.SEVERE, null, ex);
+                }
+        }   
+        catch (EntierNegatifException e2){//si saisie d'un entier nagatif 
+            System.out.println("Veuillez saisir un entier positif.");
+                try {
+                    MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir, tourJoueur, coordonneBateauAllie, coordonneBateauIa);
+                } catch (IOException | EntierNegatifException | EntierTropGrand ex) {
+                    Logger.getLogger(Croiseur.class.getName()).log(Level.SEVERE, null, ex);
+                }
+        }
+        catch (EntierTropGrand e3){//si saisie d'un entier trop grand 
+            System.out.println("l'entier saisi est trop grand. Entre 0 et 14 svp");
+                try {
+                    MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir, tourJoueur, coordonneBateauAllie, coordonneBateauIa);
+                } catch (IOException | EntierNegatifException | EntierTropGrand ex) {
+                    Logger.getLogger(Croiseur.class.getName()).log(Level.SEVERE, null, ex);
+                }
+        }
+            System.out.println("");
+            System.out.print("Colonne : ");//selection colonne avec blindage 
+            try{
+            
+            String entree = new Scanner(System.in).nextLine();
+            caseTirj = Integer.parseInt(entree);
+            if (caseTirj<0){
+                throw new EntierNegatifException();
+            }
+            else if(caseTirj>14){
+                throw new EntierTropGrand();
+            }
+        }
+            
+        catch (NumberFormatException e){//si saisie d'un ou plusieurs caracteres 
+            System.out.println("Veuillez saisir un entier.");
+                try {
+                    MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir, tourJoueur, coordonneBateauAllie, coordonneBateauIa);
+                } catch (IOException | EntierNegatifException | EntierTropGrand ex) {
+                    Logger.getLogger(Croiseur.class.getName()).log(Level.SEVERE, null, ex);
+                }
+        }   
+        catch (EntierNegatifException e2){//si saisie d'un entier negatif 
+            System.out.println("Veuillez saisir un entier positif.");
+                try {
+                    MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir, tourJoueur, coordonneBateauAllie, coordonneBateauIa);
+                } catch (IOException | EntierNegatifException | EntierTropGrand ex) {
+                    Logger.getLogger(Croiseur.class.getName()).log(Level.SEVERE, null, ex);
+                }
+        }
+        catch (EntierTropGrand e3){//si saisie d'un entier trop grand 
+            System.out.println("l'entier saisi est trop grand. Entre 0 et 14 svp");
+                try {
+                    MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir, tourJoueur, coordonneBateauAllie, coordonneBateauIa);
+                } catch (IOException | EntierNegatifException | EntierTropGrand ex) {
+                    Logger.getLogger(Croiseur.class.getName()).log(Level.SEVERE, null, ex);
+                }
+        }
+            System.out.println("");   
+        }
+        else if(tourJoueur%2==1){
+            int max=14;
+            int min=0;
+            caseTiri= (int)(Math.random()* (max - min + 1) + min );//aleatoire entre 0 et 14 pour ligne et colonne
+            caseTirj= (int)(Math.random()* (max - min + 1) + min );
+        }
+        if (tourJoueur%2==0){//fonction tir 
+            if(caseTiri>=0 && caseTiri<14 && caseTirj>=0 && caseTirj<14){
+                if(tableIa[caseTiri][caseTirj].equals("  ") || tableIa[caseTiri][caseTirj].equals("SS")){//test pour voir si touche ou non 
+                System.out.println("Le tir a echoue. Vous n'avez rien touche.");
+                
+                }
+                else{
                 System.out.println("Touche !");
-                GrilleTir[caseTiri][caseTirj]="XX";
-                GrilleAdv[caseTiri][caseTirj]="XX";
+                tableAllieTir[caseTiri][caseTirj]="XX";//modif table tir 
+                tableIa[caseTiri][caseTirj]="XX";//modif table Ia
                 for(int k=0; k<2; k++){
                     for(int q=0; q<2; q++){
-                        if(GrilleAdv[caseTiri+k][caseTirj+q].equals("  ") || GrilleAdv[caseTiri+k][caseTirj+q].equals("SS") || GrilleTir[caseTiri+k][caseTirj+q].equals("XX")){
+                        if(tableIa[caseTiri+k][caseTirj+q].equals("  ") || tableIa[caseTiri+k][caseTirj+q].equals("SS") || tableAllieTir[caseTiri+k][caseTirj+q].equals("XX")){
                         }
                         else{
                             System.out.println("Degats collateraux !");
-                            GrilleTir[caseTiri+k][caseTirj+q] = "XX";
-                            GrilleAdv[caseTiri+k][caseTirj+q] = "XX";
+                            tableAllieTir[caseTiri+k][caseTirj+q] = "XX";//Modif table tir 
+                            tableIa[caseTiri+k][caseTirj+q] = "XX";//modif table Ia
                         }
                     }
                 }
+                PlacementBateau.TestCoule(tableIa,coordonneBateauIa);//test sur les bateaux coule avec modif de coordonneBateau empecher leur deplacement 
+                    try {
+                        MenuDuJeu.TestFinDePartie(tourJoueur, tableAllie, tableIa);//test si tous les bateaux coules
+                    } catch (IOException | EntierNegatifException | EntierTropGrand ex) {
+                        Logger.getLogger(Croiseur.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                
+                }
             }
+            else{
+                System.out.println("votre demande n'est pas correcte.Veuillez rejouer!");
+                try {
+                    MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir, tourJoueur, coordonneBateauAllie, coordonneBateauIa);
+                } catch (IOException | EntierNegatifException | EntierTropGrand ex) {
+                    Logger.getLogger(Croiseur.class.getName()).log(Level.SEVERE, null, ex);
+                }
         }
-        else{
-             if (tourJoueur%2==0){
-                            MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
-                        }
-                if (tourJoueur%2==1){
-                            MenuDuJeu.menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
-                        }
         }
+        if (tourJoueur%2==1){//pour l'ordi
+            if(caseTiri>=0 && caseTiri<15 && caseTirj>=0 && caseTirj<15){
+                if(tableAllie[caseTiri][caseTirj].equals("  ") || tableAllie[caseTiri][caseTirj].equals("SS")){
+                
+                
+                }
+                else{
+                
+                tableIaTir[caseTiri][caseTirj]="XX";//modif table Ia tir 
+                tableAllie[caseTiri][caseTirj]="XX";//modif table Joueur 
+                for(int k=0; k<2; k++){
+                    for(int q=0; q<2; q++){
+                        if(tableAllie[caseTiri+k][caseTirj+q].equals("  ") || tableAllie[caseTiri+k][caseTirj+q].equals("SS") || tableIaTir[caseTiri+k][caseTirj+q].equals("XX")){
+                        }
+                        else{
+                            
+                            tableIaTir[caseTiri+k][caseTirj+q] = "XX";//modif table tir Ia
+                            tableAllie[caseTiri+k][caseTirj+q] = "XX";//modif table joueur
+                        }
+                    }
+                }
+                PlacementBateau.TestCoule(tableAllie,coordonneBateauAllie);//modif coordonne Bateau
+                    try {
+                        MenuDuJeu.TestFinDePartie(tourJoueur, tableAllie, tableIa);
+                    } catch (IOException | EntierNegatifException | EntierTropGrand ex) {
+                        Logger.getLogger(Croiseur.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                
+                }
+            }
+            else{
+                try {
+                    MenuDuJeu.menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir, tourJoueur, coordonneBateauAllie, coordonneBateauIa);
+                } catch (IOException | EntierNegatifException | EntierTropGrand ex) {
+                    Logger.getLogger(Croiseur.class.getName()).log(Level.SEVERE, null, ex);
+                }
+        }
+        }
+        
     }
 
     @Override
-    public void Deplacement(String[][] tableAllie, String[][] tableAllieTir, String[][] tableIa, String[][] tableIaTir, String croiseur, int i, int j, int tourJoueur, int[][] coordonneBateauAllie, int[][] coordonneBateauIa) {
-         if (croiseur.equals("oo")){
+    public void Deplacement(String[][] tableAllie, String[][] tableAllieTir, String[][] tableIa, String[][] tableIaTir, String croiseur , int i, int j, int tourJoueur, int[][] coordonneBateauAllie, int[][] coordonneBateauIa) {
+        if (croiseur.equals("oo")){//test pour continuer la demande 
              try {         
-                 choixSens(tableAllie, tableAllieTir, tableIa, tableIaTir , i, j , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
-             } catch (IOException ex) {
+                 choixSens(tableAllie, tableAllieTir, tableIa, tableIaTir , i, j , tourJoueur , coordonneBateauAllie , coordonneBateauIa);//envoi vers la fonction qui permet le deplacement
+             } catch (IOException | EntierNegatifException | EntierTropGrand ex) {
                  Logger.getLogger(Croiseur.class.getName()).log(Level.SEVERE, null, ex);
              }
         }
@@ -262,19 +471,30 @@ import java.util.logging.Logger;
                 System.out.println("Recommencez");
                 try {
                     MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
-                } catch (IOException ex) {
+                } catch (IOException | EntierNegatifException | EntierTropGrand ex) {
                     Logger.getLogger(Croiseur.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            if (tourJoueur%2==1){
+            else if (tourJoueur%2==1){
                 try {
                     MenuDuJeu.menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
-                } catch (IOException ex) {
+                } catch (IOException | EntierNegatifException | EntierTropGrand ex) {
                     Logger.getLogger(Croiseur.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
-    }  
+    }
 
+    
 }
+
+    
+
+    
+    
+
+
+    
+     
+    
 

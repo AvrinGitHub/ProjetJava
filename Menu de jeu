@@ -1,42 +1,94 @@
-package projetjava;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package bataillenavaleprojet.Controleur;
 
+
+import bataillenavaleprojet.Modele.Grille;
+import bataillenavaleprojet.Controleur.Destroyer;
+import bataillenavaleprojet.Controleur.Cuirasse;
+import bataillenavaleprojet.Controleur.Croiseur;
+import bataillenavaleprojet.Modele.PlacementBateau;
+import bataillenavaleprojet.Vue.Aide;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.* ; 
-
-
+/**
+ *
+ * @author bastien
+ */
 public class MenuDuJeu {
     
-    public static void menu(int tourJoueur) throws IOException {
-        tourJoueur=0;              
-        int nombreMenu;
-
+    public static void menu(int tourJoueur) throws IOException, EntierNegatifException, FileNotFoundException, EntierTropGrand {
+        //variables 
+                     
+        int nombreMenu=0;
+        //grilles qui seront utilisees 
         String [][] tableAllie = Grille.creaGrille();
         String[][] tableAllieTir = Grille.creaGrille();
         String[][] tableIa = Grille.creaGrille();
         String[][] tableIaTir = Grille.creaGrille();
+        String [][] tableAllieNew = Grille.creaGrille();
+        String[][] tableAllieTirNew = Grille.creaGrille();
+        String[][] tableIaNew = Grille.creaGrille();
+        String[][] tableIaTirNew = Grille.creaGrille();
+        int[][] coordonneBateauAllie = new int[10][6];
+        int[][] coordonneBateauIa = new int[10][6];
+        int[][] coordonneBateauAllieNew = new int[10][6];
+        int[][] coordonneBateauIaNew = new int[10][6];
         
-        System.out.println(" sélectionner 1, 2, 3 ou 4. \n 1: Jouer une partie \n 2. Charger une partie \n 3. Aide (doit expliquer clairement les règles du jeu et les touches du clavier à utiliser lors d’une partie) \n 4. Quitter");
-        nombreMenu = new Scanner(System.in).nextInt();
+        System.out.println(" Pour jouer, vous n'avez besoin que des chiffres sur votre clavier. \n Sélectionner 1, 2, 3 ou 4. \n 1: Jouer une partie \n 2. Charger une partie \n 3. Aide (doit expliquer clairement les règles du jeu et les touches du clavier à utiliser lors d’une partie) \n 4. Quitter");
+        try{//demande pour le menu 
+            
+            String entree = new Scanner(System.in).nextLine();
+            nombreMenu = Integer.parseInt(entree);
+            if (nombreMenu<0){
+                throw new EntierNegatifException();
+        
+            }
+        }
+            
+        catch (NumberFormatException e){
+            System.out.println("Veuillez saisir un entier.");
+        }   
+        catch (EntierNegatifException e2){
+            System.out.println("Veuillez saisir un entier positif.");
+        }
+
+        
+        
         switch( nombreMenu ) {
             
             case 1: //lancer une partie 
-                int[][] coordonneBateauAllie = null;
-                int[][] coordonneBateauIa = null; 
-                PlacementBateau.placement(tableAllie , coordonneBateauAllie);
+                 
+                PlacementBateau.placement(tableAllie , coordonneBateauAllie);//on cree et on remplit les grilles 
                 PlacementBateau.placement(tableIa , coordonneBateauIa);
-
-                MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur, coordonneBateauAllie, coordonneBateauIa);
+                //on lance le debut de partie avec alternance entre les tours de l'ordi et du joueur 
+                Partie.ChoixTourJoueur( tableAllie, tableAllieTir, tableIa, tableIaTir, tourJoueur, coordonneBateauAllie, coordonneBateauIa);
                 break;
             case 2: //charger une partie 
-               ChargementPartie.chargerUnePartie(tableAllie, tableAllieTir, tableIa, tableIaTir);
+               //on recupere les derniers fichiers sauvegardes 
+               tourJoueur=0;
+               tableAllieNew = Sauvegarde.tabRecup("tableAllie");
+               tableAllieTirNew = Sauvegarde.tabRecup("tableAllieTir");
+               tableIaNew = Sauvegarde.tabRecup("tableIa");
+               tableIaTirNew = Sauvegarde.tabRecup("tableIaTir");
+               coordonneBateauAllieNew=Sauvegarde.tabRecupCoordonneBateau("coordonneBateauAllie");
+               coordonneBateauIaNew=Sauvegarde.tabRecupCoordonneBateau("coordonneBateauIa");
+               //puis on relance la partie 
+               Partie.ChoixTourJoueur(tableAllieNew, tableAllieTirNew, tableIaNew, tableIaTirNew, tourJoueur , coordonneBateauAllieNew, coordonneBateauIaNew);
 
                 break;
             case 3: //afficher l'aide 
                 Aide.afficherRegles();
+                menu(tourJoueur);
                 break;
             case 4: //quitter le jeu 
                 System.out.println("Merci d'avoir joue.");
+                System.exit(0);
+                
                 break;
             default:
                 System.out.println( "Entre 1 et 4 svp" );
@@ -45,55 +97,159 @@ public class MenuDuJeu {
         
     }
 
-    public static void menuDuTour(String [][] tableAllie, String[][] tableAllieTir, String[][] tableIa, String[][] tableIaTir, int tourJoueur, int[][] coordonneBateauAllie , int[][] coordonneBateauIa) throws FileNotFoundException, IOException{
-
-        int nombreAction;
-        System.out.println("Sélectionner 1, 2, ou 3. 1: Tirer \n 2: Déplacer un bateau qui n'a pas été touché \n 3: quitter et enregistrer la partie \n ");
-        nombreAction = new Scanner(System.in).nextInt();
+    public static void menuDuTour(String [][] tableAllie, String[][] tableAllieTir, String[][] tableIa, String[][] tableIaTir, int tourJoueur, int[][] coordonneBateauAllie , int[][] coordonneBateauIa) throws FileNotFoundException, IOException, EntierNegatifException, EntierTropGrand{
+        //on affiche les grilles a chaque debut de tour du joueur 
+        
+        Grille.afficheGrille(tableAllie);
+        Grille.afficheGrille(tableAllieTir);
+        
+        int nombreAction=0;
+        System.out.println("Sélectionner 1, 2, ou 3. \n 1: Tirer \n 2: Déplacer un bateau qui n'a pas été touché \n 3: quitter et enregistrer la partie \n ");
+         try{//demande pour le menu 
+            
+            String entree = new Scanner(System.in).nextLine();
+            nombreAction = Integer.parseInt(entree);
+            if (nombreAction<0){
+                throw new EntierNegatifException();
+        
+            }
+        }
+            
+        catch (NumberFormatException e){
+            System.out.println("Veuillez saisir un entier.");
+        }   
+        catch (EntierNegatifException e2){
+            System.out.println("Veuillez saisir un entier positif.");
+        }
         
         switch( nombreAction ) {
             
             case 1: //tirer
-
-                tourJoueur++;
-                MenuDuJeu.menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                //lance le choix sur le navire qui tire 
+                menuBateauTir(tableAllie, tableAllieTir, tableIa, tableIaTir ,tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                
+                
+                
+                
                 break;
             case 2: //déplacer bateau
-                int selectioni;
-                int selectionj;
-                System.out.println( "rentrez la coordonnee la plus à gauche si le bateau est horizontal ou la plus haute si le bateau est vertical " );
                 
+                int selectioni=0;
+                int selectionj=0;
+                System.out.println( "rentrez la coordonnee la plus à gauche si le bateau est horizontal ou la plus haute si le bateau est vertical " );
+                //on demande la coordonne du bateau a deplacer 
                 System.out.print( "ligne: " );
                 System.out.println( " " );
-                selectioni = new Scanner(System.in).nextInt();
+                try{
+            
+                    String entree = new Scanner(System.in).nextLine();
+                    selectioni = Integer.parseInt(entree);
+                    if (selectioni<0){
+                        throw new EntierNegatifException();
+        
+                    }
+                    else if(selectioni>14){
+                        throw new EntierTropGrand();
+                    }
+            
+                }
+            
+                catch (NumberFormatException e){
+                    System.out.println("Veuillez saisir un entier.");
+                    menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                }  
+                catch (EntierNegatifException e2){
+                    System.out.println("Veuillez saisir un entier positif.");
+                    menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                }
+                catch (EntierTropGrand e3){
+                    System.out.println("Veuillez saisir un entier entre 0 et 14");
+                    menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                }
 
                 System.out.print( "colonne" );
                 System.out.println( " " );
-                selectionj = new Scanner(System.in).nextInt();
-
+                try{
+            
+                    String entree = new Scanner(System.in).nextLine();
+                    selectionj = Integer.parseInt(entree);
+                    if (selectionj<0){
+                        throw new EntierNegatifException();
+        
+                    }
+                    else if(selectionj>14){
+                        throw new EntierTropGrand();
+                    }
+            
+                }
+            
+                catch (NumberFormatException e){
+                    System.out.println("Veuillez saisir un entier.");
+                    menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                }  
+                catch (EntierNegatifException e2){
+                    System.out.println("Veuillez saisir un entier positif.");
+                    menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                }
+                catch (EntierTropGrand e3){
+                    System.out.println("Veuillez saisir un entier entre 0 et 14");
+                    menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                }
+                //puis on lance le choix du bateau pour verifier si tout concorde         
                 menuBateau(tableAllie, tableAllieTir, tableIa, tableIaTir , selectioni, selectionj , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
-                tourJoueur++;
-                menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                
+                
                 break;
             case 3: //quitter et sauvegarder partie et revenir au menu  
+                //on sauvegarde toutes les tables utiles 
                 Sauvegarde.tabRec("tableAllie" , tableAllie);
                 Sauvegarde.tabRec("tableAllieTir" , tableAllieTir);
                 Sauvegarde.tabRec("tableIa" , tableIa);
                 Sauvegarde.tabRec("tableIaTir" , tableIaTir);
-                menu(tourJoueur);
+                Sauvegarde.tabRecBateauCoordonne("coordonneBateauAllie", coordonneBateauAllie);
+                Sauvegarde.tabRecBateauCoordonne("coordonneBateauIa" , coordonneBateauIa);
+                System.out.println("sauvegarde effectuee");
+                //et on quitte
+                
+                System.exit(0);
+                
                 break;
            
             default:
                 System.out.println( "Entre 1 et 3 svp" );
-                menu(tourJoueur);
+                MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir, tourJoueur, coordonneBateauAllie, coordonneBateauIa);
         }
+        
     }
 
-    public static void menuBateau(String [][] tableAllie, String[][] tableAllieTir, String[][] tableIa, String[][] tableIaTir , int i , int j, int tourJoueur , int[][] coordonneBateauAllie , int[][] coordonneBateauIa) throws IOException{
+    public static void menuBateau(String [][] tableAllie, String[][] tableAllieTir, String[][] tableIa, String[][] tableIaTir , int i , int j, int tourJoueur , int[][] coordonneBateauAllie , int[][] coordonneBateauIa) throws IOException, FileNotFoundException, EntierNegatifException, EntierTropGrand{
 
-        int nombreAction;
-        System.out.println("Sélectionner 1, 2, ou 3. 1: sousMarin \n 2: destroyer \n 3: croiseur 4: cuirasse \n ");
-        nombreAction = new Scanner(System.in).nextInt();
+        int nombreAction=0;
+        if (tourJoueur%2==0){
+            System.out.println("Sélectionner 1, 2, 3, 4 ou 5. \n 1: sousMarin(1 case) \n 2: destroyer (3 cases) \n 3: croiseur (5 cases) \n 4: cuirasse (7 cases) \n 5: revenir au menu");
+             try{//choix du bateau a deplacer qui envoie vers les filles de navire 
+            
+            String entree = new Scanner(System.in).nextLine();
+            nombreAction = Integer.parseInt(entree);
+            if (nombreAction<0){
+                throw new EntierNegatifException();
+        
+            }
+            
+        }
+            
+        catch (NumberFormatException e){
+            System.out.println("Veuillez saisir un entier.");
+        }   
+        catch (EntierNegatifException e2){
+            System.out.println("Veuillez saisir un entier positif.");
+        }
+        }
+        else if(tourJoueur%2==1){
+            int max=4;
+            int min=1;
+            nombreAction=(int)(Math.random()* (max - min + 1) + min );
+        }
         
         switch( nombreAction ) {
             
@@ -143,19 +299,122 @@ public class MenuDuJeu {
                 String cuirassestrg = tableIa[i][j];
                 cuirasse.Deplacement(tableAllie, tableAllieTir, tableIa, tableIaTir ,cuirassestrg, i, j , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
                 }
-                break; 
+                break;
+                
+            case 5: //retour menu
+                menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
            
             default:
-                System.out.println( "Entre 1 et 4 svp" );
-                menu(tourJoueur);
+                if (tourJoueur%2==0){
+                    System.out.println( "Entre 1 et 5 svp" );
+                    menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);  
+                }
+                else if(tourJoueur%2==1){
+                    menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                }
+        }
+    }
+    
+    public static void menuBateauTir(String [][] tableAllie, String[][] tableAllieTir, String[][] tableIa, String[][] tableIaTir , int tourJoueur , int[][] coordonneBateauAllie , int[][] coordonneBateauIa) throws IOException, FileNotFoundException, EntierNegatifException, EntierTropGrand{
+
+        int nombreAction = 0;
+        if (tourJoueur%2==0){
+            System.out.println("Sélectionner 1, 2, 3, 4 ou 5 \n 1: sousMarin \n 2: destroyer \n 3: croiseur \n 4: cuirasse \n 5: revenir au menu ");
+             try{//choix du bateau qui tire qui envoie vers les filles de navire 
+            
+            String entree = new Scanner(System.in).nextLine();
+            nombreAction = Integer.parseInt(entree);
+            if (nombreAction<0){
+                throw new EntierNegatifException();
+        
+            }
+        }
+            
+        catch (NumberFormatException e){
+            System.out.println("Veuillez saisir un entier.");
+        }   
+        catch (EntierNegatifException e2){
+            System.out.println("Veuillez saisir un entier positif.");
+        }
+        }
+        else if(tourJoueur%2==1){
+            int max=4;
+            int min=1;
+            nombreAction=(int)(Math.random()* (max - min + 1) + min );
+        }
+        
+        switch( nombreAction ) {
+            
+            
+            case 1: //sousmarin
+                
+                SousMarin sousmarin = new SousMarin();
+                if (tourJoueur%2==0){
+                    
+                    sousmarin.Tir(tableAllie, tableAllieTir, tableIa, tableIaTir, tourJoueur, coordonneBateauAllie , coordonneBateauIa );
+                }
+                if (tourJoueur%2==1){
+                    
+                    sousmarin.Tir(tableAllie, tableAllieTir, tableIa, tableIaTir, tourJoueur, coordonneBateauAllie , coordonneBateauIa );   
+                }
+                break;
+
+            case 2: //destroyer
+                Destroyer destroyer = new Destroyer();
+                if (tourJoueur%2==0){
+                    
+                    destroyer.Tir(tableAllie, tableAllieTir, tableIa, tableIaTir, tourJoueur, coordonneBateauAllie , coordonneBateauIa );
+                }
+                if (tourJoueur%2==1){
+                    
+                    destroyer.Tir(tableAllie, tableAllieTir, tableIa, tableIaTir, tourJoueur, coordonneBateauAllie , coordonneBateauIa );    
+                }
+                break;
+            case 3: //croiseur  
+                Croiseur croiseur = new Croiseur();
+                if (tourJoueur%2==0){
+                    
+                    croiseur.Tir(tableAllie, tableAllieTir, tableIa, tableIaTir, tourJoueur, coordonneBateauAllie , coordonneBateauIa );
+                }
+                if (tourJoueur%2==1){
+                   
+                    croiseur.Tir(tableAllie, tableAllieTir, tableIa, tableIaTir, tourJoueur, coordonneBateauAllie , coordonneBateauIa );
+                }
+                    
+                break;
+
+            case 4: //cuirasse
+                Cuirasse cuirasse = new Cuirasse();
+                if (tourJoueur%2==0){
+                    
+                cuirasse.Tir(tableAllie, tableAllieTir, tableIa, tableIaTir, tourJoueur, coordonneBateauAllie , coordonneBateauIa);    
+                }
+                if (tourJoueur%2==1){
+                    
+                    cuirasse.Tir(tableAllie, tableAllieTir, tableIa, tableIaTir, tourJoueur, coordonneBateauAllie , coordonneBateauIa );
+                }
+                break;
+                
+            case 5: //retour menu
+                menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa );
+           
+            default:
+                if (tourJoueur%2==0){
+                    System.out.println( "Entre 1 et 5 svp" );
+                    menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);  
+                }
+                else if(tourJoueur%2==1){
+                    menuDuTourIa(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                }
+                
         }
     }
 
-    public static void menuDuTourIa(String [][] tableAllie, String[][] tableAllieTir, String[][] tableIa, String[][] tableIaTir , int tourJoueur , int[][] coordonneBateauAllie , int[][] coordonneBateauIa) throws IOException{
+    public static void menuDuTourIa(String [][] tableAllie, String[][] tableAllieTir, String[][] tableIa, String[][] tableIaTir , int tourJoueur , int[][] coordonneBateauAllie , int[][] coordonneBateauIa) throws IOException, FileNotFoundException, EntierNegatifException, EntierTropGrand{
 
-        int max=2;
-        int min=1;
-        int nombreAction = (int)(Math.random() * (max - min) );
+        int max = 2;
+        int min = 1;
+        int nombreAction = (int)(Math.random()* (max - min + min) + min);
         
         
         
@@ -163,41 +422,56 @@ public class MenuDuJeu {
             
             case 1: //tirer
                 
-                tourJoueur++;
-                MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa );
+                menuBateauTir(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                
+                
                 break;
             case 2: //déplacer bateau
+                
                 int maxi=14;
                 int mini=0;
-                
+                //creation coordonne aleatoire pour un bateau a deplacer 
                 int i = (int)(Math.random() * (maxi - mini));
                 int j = (int)(Math.random() * (maxi - mini));
                 menuBateau(tableAllie, tableAllieTir, tableIa, tableIaTir , i , j , tourJoueur, coordonneBateauAllie , coordonneBateauIa);
-                tourJoueur++;
-                MenuDuJeu.menuDuTour(tableAllie, tableAllieTir, tableIa, tableIaTir , tourJoueur , coordonneBateauAllie , coordonneBateauIa);
+                
+               
+                
                 break;
+            
+            default:
+                System.out.println( "Entre 1 et 2 svp" );
             
         }
     }
 
-    public static void finDePartie(int[][] coordonneBateauAllie , int[][] coordonneBateauIa){ 
+    public static void TestFinDePartie(int tourJoueur, String[][] tableAllie , String[][] tableIa) throws IOException, EntierNegatifException, FileNotFoundException, EntierTropGrand{
         
-        int compteurAllie = 0; 
-        int compteurIa = 0; 
-        for (int i=0 ; i<10 ; i++){
-            if (coordonneBateauAllie[i][4]==3 ){
-                compteurAllie++;
-            }
-            if (coordonneBateauIa[i][4]==3){
-                compteurIa++;
+        int compteurAllie=0;
+        int compteurIa=0;
+        for (int i=0 ; i<15 ; i++){
+            for (int j=0 ; j<15 ; j++){
+                if (tableAllie[i][j].equals("XX")){
+                    compteurAllie++;
+                }
+                else if(tableIa[i][j].equals("XX")){
+                    compteurIa++;
+                }
             }
         }
-
-        if (compteurAllie==10){
-            System.out.println("Vous avez perdu");
+        //des qu'une table contient 30 XX, tous les bateaux sont coules
+        if (compteurAllie== 30){
+            System.out.println("vous avez perdu, tous vos bateaux sont coules.");
+            tourJoueur=0;
+            menu(tourJoueur);
         }
-        if (compteurIa==10){
-            System.out.println("Vous avez gagne");
-        }        
+        if (compteurIa== 30){
+            System.out.println("vous avez gagne, tous les bateaux de l'adversaire ont ete coules");
+            tourJoueur=0;
+            menu(tourJoueur);
+        }
+    }
+    public static int quitterPartie(){
+        return 0;
     }
 }

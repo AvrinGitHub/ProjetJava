@@ -3,22 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projetjava;
+package bataillenavaleprojet.Modele;
 
 /**
  *
- * @author Admin
+ * @author bastien
  */
-public abstract class Navire {
-    //Taille du navire
-    int taille = 0;
+public abstract class Navire {//heritage sur les bateaux
     
-    public abstract void Tir(String[][] GrilleAdv, String[][] GrilleTir);
     
+    //fonction tir
+    public abstract void Tir( String [][] tableAllie, String[][] tableAllieTir, String[][] tableIa, String[][] tableIaTir, int tourJoueur, int[][] coordonneBateauAllie , int[][] coordonneBateauIa );
+    //fonction deplacement
     public abstract void Deplacement(String [][] tableAllie, String[][] tableAllieTir, String[][] tableIa, String[][] tableIaTir , String navire, int i, int j, int tourJoueur , int[][] coordonneBateauAllie , int[][] coordonneBateauIa);
     
-    public int getTaille(){
-        return this.taille;
-    }
+    
     
 }

@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projetjava;
+package bataillenavaleprojet.Modele;
 
 /**
  *
- * @author Romain
+ * @author bastien
  */
 public class Grille{
     
@@ -63,7 +63,7 @@ public class Grille{
         return Grille;
     }
     
-    public static String[] retourLettre(int i){
+    public static String[] retourLettre(int i){//pour mettre les lettres sur les lignes 
         
         String lettre[];
         lettre = new String[1];

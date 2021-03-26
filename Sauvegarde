@@ -1,4 +1,10 @@
-package projetjava;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package bataillenavaleprojet.Controleur;
+
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -8,12 +14,16 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.Reader;
-import java.util.ArrayList;
 
-public class Sauvegarde{
-@SuppressWarnings("empty-statement")
-public static void tabRec(String file , String[][] tab) throws FileNotFoundException{
+/**
+ *
+ * @author bastien
+ */
+public class Sauvegarde {
     
+    @SuppressWarnings("empty-statement")
+public static void tabRec(String file , String[][] tab) throws FileNotFoundException{
+    //sauvegarde les tableaux avec une ligne = une case du tableau 
         try (PrintWriter pr = new PrintWriter(file)) {
             for (int i=0 ; i<15 ; i++){
                 for (int j=0 ; j<15 ; j++){
@@ -23,6 +33,7 @@ public static void tabRec(String file , String[][] tab) throws FileNotFoundExcep
         }
 }
 public static String[][] tabRecup(String file ) throws IOException{
+    //lit le fichier sauvegarde et une ligne=une case 
     String[][] tab = new String[15][15];
     InputStream is = new FileInputStream(file);
   Reader tmpReader = new InputStreamReader(is, "utf-8");
@@ -44,6 +55,100 @@ public static String[][] tabRecup(String file ) throws IOException{
   }
   return tab; 
 }
+
+public static void tabRecBateauCoordonne(String file , int[][] tab) throws FileNotFoundException{
+    //sauvegarde le tableau avec toutes les infos sur les bateaux 
+        try (PrintWriter pr = new PrintWriter(file)) {
+            for (int i=0 ; i<10 ; i++){
+                for (int j=0 ; j<6 ; j++){
+                    pr.println(tab[i][j]);
+                }
+            }
+        }
 }
 
- 
+public static int[][] tabRecupCoordonneBateau(String file ) throws IOException{
+    //pour recup les coordonneBateau 
+    String[][] tab = new String[10][6];
+    InputStream is = new FileInputStream(file);
+  Reader tmpReader = new InputStreamReader(is, "utf-8");
+  BufferedReader reader = new BufferedReader(tmpReader);
+  int i=0;
+  int j=0;
+  try {
+    for(String line = reader.readLine(); line != null; line = reader.readLine()) {
+        tab[i][j]=line;
+      j++; 
+      if (j==6){
+          j=0;
+          i++;
+      }   
+    }
+    
+  } finally {
+    reader.close(); 
+  }
+  //passer de string à des int 
+  int[][] tableau = new int[10][6];
+  for (int z=0 ; z<10 ; z++){
+      for (int y=0 ; y<6 ; y++){
+          if (tab[z][y].equals("0")){
+              tableau[z][y]=0;
+          }
+          if (tab[z][y].equals("1")){
+              tableau[z][y]=1;
+          }
+          if (tab[z][y].equals("2")){
+              tableau[z][y]=2;
+          }
+          if (tab[z][y].equals("3")){
+              tableau[z][y]=3;
+          }
+          if (tab[z][y].equals("4")){
+              tableau[z][y]=4;
+          }
+          if (tab[z][y].equals("5")){
+              tableau[z][y]=5;
+          }
+          if (tab[z][y].equals("6")){
+              tableau[z][y]=6;
+          }
+          if (tab[z][y].equals("7")){
+              tableau[z][y]=7;
+          }
+          if (tab[z][y].equals("8")){
+              tableau[z][y]=8;
+          }
+          if (tab[z][y].equals("9")){
+              tableau[z][y]=9;
+          }
+          if (tab[z][y].equals("10")){
+              tableau[z][y]=10;
+          }
+          if (tab[z][y].equals("11")){
+              tableau[z][y]=11;
+          }
+          if (tab[z][y].equals("12")){
+              tableau[z][y]=12;
+          }
+          if (tab[z][y].equals("13")){
+              tableau[z][y]=13;
+          }
+          if (tab[z][y].equals("14")){
+              tableau[z][y]=14;
+          }
+      
+  } 
+}
+        return tableau; 
+}
+       
+    
+
+
+}
+
+
+
+    
+
